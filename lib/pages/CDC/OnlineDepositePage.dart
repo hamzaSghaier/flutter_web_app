@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecommerce_admin_tut/pages/home/filePickerDemo.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/page_header.dart';
@@ -9,43 +11,35 @@ class OnlineDepositePage extends StatefulWidget {
   _OnlineDepositePageState createState() => _OnlineDepositePageState();
 }
 
+const _chars =
+    'AaBbCcDdEeFfG1234567890lMmN1234567890TtUuVvW1234567890Zz1234567890';
+
 class _OnlineDepositePageState extends State<OnlineDepositePage> {
   final rapportNumberController = TextEditingController();
-  final assocNameController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
-  final rapportNumberController = TextEditingController();
 
+  final rneController = TextEditingController();
+  Random _rnd = Random();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   String _pickingType;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    rapportNumberController.text = getRandomString(10);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: ListView(
+      body: ListView(
         children: [
           Center(
             child: PageHeader(
-              text: "Dépot en ligne des rapport",
+              text: "Dépot en ligne des rapports",
             ),
           ),
           Row(
@@ -65,297 +59,6 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
           ),
           SizedBox(
             height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: CustomText(
-              text: "Informations générale :",
-              size: 30,
-              weight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Nom Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Date de creation  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Type Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: DropdownButton<String>(
-                        hint: Container(
-                          width: 300,
-                          child: Text(
-                            "   Type Association    ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ),
-                        value: _pickingType,
-                        items: <DropdownMenuItem<String>>[
-                          DropdownMenuItem(
-                            child: const Text('Type 1'),
-                            value: "FileType.audio",
-                          ),
-                          DropdownMenuItem(
-                            child: const Text('Type 2'),
-                            value: "FileType.image",
-                          ),
-                          DropdownMenuItem(
-                            child: const Text('Type 3'),
-                            value: "FileType.video",
-                          ),
-                          DropdownMenuItem(
-                            child: const Text('Type 4'),
-                            value: "FileType.media",
-                          ),
-                          DropdownMenuItem(
-                            child: const Text('Type 5'),
-                            value: "FileType.any",
-                          ),
-                          DropdownMenuItem(
-                            child: const Text('Type 6'),
-                            value: "FileType.custom",
-                          ),
-                        ],
-                        onChanged: (value) => setState(() {
-                              _pickingType = value;
-                            })),
-                  )
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Matricule cnss  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Matricule fiscale  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Email Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Numero RNE  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Fax Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: CustomText(
-              text: "Informations responsable :",
-              size: 30,
-              weight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Nom et prénom  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Cin  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Email  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Téléphone  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
-                ],
-              ),
-            ],
           ),
           SizedBox(
             height: 20,
@@ -574,7 +277,7 @@ class CustomEditText extends StatelessWidget {
             //     fullNameController.text),
             FocusScope.of(context).requestFocus(new FocusNode())
           },
-          readOnly: false,
+          readOnly: true,
           maxLines: 1,
           controller: rapportNumberController,
           textAlign: TextAlign.center,

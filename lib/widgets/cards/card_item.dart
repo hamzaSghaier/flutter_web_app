@@ -9,7 +9,7 @@ class CardItem extends StatelessWidget {
   final Color color1;
   final Color color2;
   final IconData icon;
-  final VoidCallback onPressed ;
+  final VoidCallback onPressed;
 
   const CardItem({
     Key key,
@@ -17,16 +17,16 @@ class CardItem extends StatelessWidget {
     this.value,
     this.color1,
     this.color2,
-    this.icon, this.onPressed,
+    this.icon,
+    this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      
       style: ElevatedButton.styleFrom(
-          primary: Color(0x2E6CF3), // background
-          onPrimary: Colors.black,
+          primary: Colors.white, // background
+          onPrimary: Colors.yellow.shade800,
           minimumSize: Size(300, 80) // foreground
           ),
       onPressed: onPressed,

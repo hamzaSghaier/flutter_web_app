@@ -1,6 +1,8 @@
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/page_header.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_html/html.dart' as html;
 
 class DownloadAccountingStandardsPage extends StatelessWidget {
   @override
@@ -193,6 +195,11 @@ class DownloadCard45 extends StatelessWidget {
   const DownloadCard45({
     Key key,
   }) : super(key: key);
+  void downloadFile(String url) {
+    html.AnchorElement anchorElement = new html.AnchorElement(href: url);
+    anchorElement.download = url;
+    anchorElement.click();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,12 +226,48 @@ class DownloadCard45 extends StatelessWidget {
                 weight: FontWeight.bold,
                 color: Colors.white,
               ),
-              CustomText(
-                text: "-Etats financier ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+              RichText(
+                text: new TextSpan(
+                  children: [
+                    new TextSpan(
+                      text: "-Etats financier ",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                      recognizer: new TapGestureRecognizer()
+                        ..onTap = () {
+                          var blob =
+                              html.Blob(["data"], 'text/plain', 'native');
+                          final url = html.Url.createObjectUrl(
+                              "http://www.courdescomptes.nat.tn/Fr/static/fr/image/png/logo.png");
+                          final anchor = html.document.createElement('a')
+                              as html.AnchorElement
+                            ..href = url
+                            ..style.display = 'none'
+                            ..download = 'some_name.png';
+                          html.document.body.children.add(anchor);
+                          anchor.click();
+                          html.document.body.children.remove(anchor);
+                          html.Url.revokeObjectUrl(url);
+                        },
+                    ),
+                  ],
+                ),
               ),
+              // RichText(
+              //  text :  "-Etats financier ",
+              //   style: TextStyle(
+              //       fontSize: 25,
+              //       color: Colors.white,
+              //       fontWeight: FontWeight.bold),
+              // ),
+              // CustomText(
+              //   text: "-Etats financier ",
+              //   size: 25,
+              //   weight: FontWeight.bold,
+              //   color: Colors.white,
+              // ),
               CustomText(
                 text: "-Tableau d'eclaircissement ",
                 size: 25,

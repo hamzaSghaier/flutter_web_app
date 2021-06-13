@@ -8,7 +8,7 @@ import 'package:ecommerce_admin_tut/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class AfterRegistration extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   @override
@@ -45,72 +45,38 @@ class LoginPage extends StatelessWidget {
                                   blurRadius: 24)
                             ]),
                         height: 400,
-                        width: 500,
+                        width: 1200,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomText(
-                              text: "Espace association",
+                              text:
+                                  "Votre demande d'inscription  est enregistrer et en cours de traitement. ",
                               size: 22,
                               weight: FontWeight.bold,
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Container(
-                                decoration:
-                                    BoxDecoration(color: Colors.grey[200]),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: TextField(
-                                    controller: authProvider.email,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Identifiant',
-                                        icon: Icon(Icons.email_outlined)),
-                                  ),
-                                ),
-                              ),
+                            CustomText(
+                              text:
+                                  "Nous vous enverrons votre mot de passe sur votre e-mail sous peu . Il vous suffira ensuite de se connecter ",
+                              size: 20,
+                              color: Colors.grey.shade800,
+                              weight: FontWeight.bold,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CustomText(
+                              text:
+                                  "Nous vous enverrons un message si nous avons besoin d'informations supplémentaires de votre part. ",
+                              size: 18,
+                              color: Colors.grey.shade800,
+                              weight: FontWeight.bold,
                             ),
                             SizedBox(
                               height: 20,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Container(
-                                decoration:
-                                    BoxDecoration(color: Colors.grey[200]),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: TextField(
-                                    controller: authProvider.password,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Mot de passe',
-                                        icon: Icon(Icons.lock_open)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CustomText(
-                                    text: "Mot de passe oublié?",
-                                    size: 16,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                              ),
                             ),
                             SizedBox(
                               height: 40,
@@ -120,6 +86,7 @@ class LoginPage extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 20),
                               child: Container(
                                 decoration: BoxDecoration(color: Colors.indigo),
+                                // ignore: deprecated_member_use
                                 child: FlatButton(
                                   onPressed: () async {
                                     // if (!await authProvider.signIn()) {
@@ -132,7 +99,7 @@ class LoginPage extends StatelessWidget {
                                     // authProvider.clearController();
 
                                     locator<NavigationService>()
-                                        .globalNavigateTo(LayoutRoute, context);
+                                        .globalNavigateTo(LoginRoute, context);
                                   },
                                   child: Padding(
                                     padding:
@@ -142,7 +109,7 @@ class LoginPage extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         CustomText(
-                                          text: "Connexion",
+                                          text: "Retour",
                                           size: 22,
                                           color: Colors.white,
                                           weight: FontWeight.bold,
@@ -155,30 +122,6 @@ class LoginPage extends StatelessWidget {
                             ),
                             SizedBox(
                               height: 40,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomText(
-                                    text: "Vous n'avez pas de compte? ",
-                                    size: 16,
-                                    color: Colors.grey,
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        locator<NavigationService>()
-                                            .globalNavigateTo(
-                                                RegistrationRoute, context);
-                                      },
-                                      child: CustomText(
-                                        text: "Inscrivez-vous ici. ",
-                                        size: 16,
-                                        color: Colors.indigo,
-                                      )),
-                                ],
-                              ),
                             ),
                           ],
                         ),

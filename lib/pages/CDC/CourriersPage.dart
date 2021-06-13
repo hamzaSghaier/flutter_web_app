@@ -9,7 +9,7 @@ class CourriersPage extends StatelessWidget {
         Container(
           child: Center(
           child: PageHeader(
-            text: "CourriersPage",
+            text: "Messageries",
           ),
         ),
         ),

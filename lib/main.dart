@@ -41,7 +41,8 @@ class AppPagesController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    return LoginPage();
+    return LayoutTemplate();
+    //return LoginPage();
 
     // return FutureBuilder(
     //   // Initialize FlutterFire:
