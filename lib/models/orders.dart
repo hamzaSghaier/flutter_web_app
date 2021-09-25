@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
   static const ID = "id";
@@ -30,15 +30,15 @@ class OrderModel {
   int get createdAt => _createdAt;
 
   // public variable
-  List cart;
+  // List cart;
 
-  OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _id = snapshot.data()[ID];
-    _description = snapshot.data()[DESCRIPTION];
-    _total = snapshot.data()[TOTAL];
-    _status = snapshot.data()[STATUS];
-    _userId = snapshot.data()[USER_ID];
-    _createdAt = snapshot.data()[CREATED_AT];
-    cart = snapshot.data()[CART];
-  }
+  // OrderModel.fromSnapshot(DocumentSnapshot snapshot) {
+  //   _id = snapshot.data()[ID];
+  //   _description = snapshot.data()[DESCRIPTION];
+  //   _total = snapshot.data()[TOTAL];
+  //   _status = snapshot.data()[STATUS];
+  //   _userId = snapshot.data()[USER_ID];
+  //   _createdAt = snapshot.data()[CREATED_AT];
+  //   cart = snapshot.data()[CART];
+  // }
 }

@@ -70,6 +70,7 @@ class DownloadCardB extends StatelessWidget {
                 weight: FontWeight.bold,
                 color: Colors.white,
               ),
+ 
               SizedBox(height: 10),
             ],
           ),

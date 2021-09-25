@@ -29,6 +29,7 @@ class RowHeader extends StatelessWidget {
           fit: BoxFit.contain,
           height: 300,
         ),
+        
       ],
     );
   }

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BrandModel {
   static const ID = "id";
@@ -11,8 +11,8 @@ class BrandModel {
   String get brand => _brand;
   String get id => _id;
 
-  BrandModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _brand = snapshot.data()[BRAND];
-    _id = snapshot.data()[ID];
-  }
+  // BrandModel.fromSnapshot(DocumentSnapshot snapshot) {
+  //   _brand = snapshot.data()[BRAND];
+  //   _id = snapshot.data()[ID];
+  // }
 }

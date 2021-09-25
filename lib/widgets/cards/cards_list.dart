@@ -2,6 +2,7 @@ import 'package:ecommerce_admin_tut/helpers/enumerators.dart';
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/pages/CDC/FollowReportPage.dart';
 import 'package:ecommerce_admin_tut/pages/home/RowHeader.dart';
+import 'package:ecommerce_admin_tut/pages/login/login.dart';
 import 'package:ecommerce_admin_tut/provider/app_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
@@ -91,6 +92,32 @@ class CardsList extends StatelessWidget {
                 //     locator<NavigationService>().navigateTo(EdocRoute);
                 //   },
                 // ),
+                Container(
+                  margin: EdgeInsets.only(left: 200),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: Ink(
+                        decoration: const ShapeDecoration(
+                          color: Colors.white,
+                          shape: CircleBorder(),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.logout),
+                          color: Colors.black,
+                          iconSize: 70,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

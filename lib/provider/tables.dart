@@ -206,11 +206,11 @@ class TablesProvider with ChangeNotifier {
   List<BrandModel> _brands = <BrandModel>[];
 
   Future _loadFromFirebase() async {
-    _users = await _userServices.getAllUsers();
-    _orders = await _orderServices.getAllOrders();
-    _products = await _productsServices.getAllProducts();
-    _brands = await _brandsServices.getAll();
-    _categories = await _categoriesServices.getAll();
+    // _users = await _userServices.getAllUsers();
+    // _orders = await _orderServices.getAllOrders();
+    // _products = await _productsServices.getAllProducts();
+    // _brands = await _brandsServices.getAll();
+    // _categories = await _categoriesServices.getAll();
   }
 
   List<Map<String, dynamic>> _getUsersData() {

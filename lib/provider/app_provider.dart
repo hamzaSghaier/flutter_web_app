@@ -20,14 +20,14 @@ class AppProvider with ChangeNotifier {
   }
 
   void _getRevenue() async {
-    await _orderServices.getAllOrders().then((orders) {
-      for (OrderModel order in orders) {
-        revenue = revenue + order.total;
-        print("======= TOTAL REVENUE: ${revenue.toString()}");
-        print("======= TOTAL REVENUE: ${revenue.toString()}");
-        print("======= TOTAL REVENUE: ${revenue.toString()}");
-      }
-      notifyListeners();
-    });
+    // await _orderServices.getAllOrders().then((orders) {
+    //   for (OrderModel order in orders) {
+    //     revenue = revenue + order.total;
+    //     print("======= TOTAL REVENUE: ${revenue.toString()}");
+    //     print("======= TOTAL REVENUE: ${revenue.toString()}");
+    //     print("======= TOTAL REVENUE: ${revenue.toString()}");
+    //   }
+    //   notifyListeners();
+    // });
   }
 }

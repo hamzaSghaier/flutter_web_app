@@ -6,13 +6,13 @@ import 'package:ecommerce_admin_tut/models/user.dart';
 import 'package:ecommerce_admin_tut/services/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class AuthProvider with ChangeNotifier {
-  User _user;
+  // User _user;
   Status _status = Status.Uninitialized;
   UserServices _userServices = UserServices();
   UserModel _userModel;
@@ -20,7 +20,7 @@ class AuthProvider with ChangeNotifier {
 //  getter
   UserModel get userModel => _userModel;
   Status get status => _status;
-  User get user => _user;
+  // User get user => _user;
 
   // public variables
   final formkey = GlobalKey<FormState>();
@@ -34,52 +34,52 @@ class AuthProvider with ChangeNotifier {
   }
 
   _fireSetUp() async {
-    await initialization.then((value) {
-      auth.authStateChanges().listen(_onStateChanged);
-    });
+    // await initialization.then((value) {
+    //   // auth.authStateChanges().listen(_onStateChanged);
+    // });
   }
 
   Future<bool> signIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    try {
-      _status = Status.Authenticating;
-      notifyListeners();
-      await auth
-          .signInWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim())
-          .then((value) async {
-        await prefs.setString("id", value.user.uid);
-        Configuration.email =  email.text.trim();
-      });
-      return true;
-    } catch (e) {
-      _status = Status.Unauthenticated;
-      notifyListeners();
-      print(e.toString());
-      return false;
-    }
+    // try {
+    //   _status = Status.Authenticating;
+    //   notifyListeners();
+    //   await auth
+    //       .signInWithEmailAndPassword(
+    //           email: email.text.trim(), password: password.text.trim())
+    //       .then((value) async {
+    //     await prefs.setString("id", value.user.uid);
+    //     Configuration.email =  email.text.trim();
+    //   });
+    //   return true;
+    // } catch (e) {
+    //   _status = Status.Unauthenticated;
+    //   notifyListeners();
+    //   print(e.toString());
+    //   return false;
+    // }
   }
 
   Future<bool> signUp() async {
     try {
-      _status = Status.Authenticating;
-      notifyListeners();
-      await auth
-          .createUserWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim())
-          .then((result) async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("id", result.user.uid);
-        _userServices.createAdmin(
-          id: result.user.uid,
-          name: name.text.trim(),
-          email: email.text.trim(),
-        );
-      });
-      Configuration.email =  email.text.trim();
-      Configuration.name =  name.text.trim();
-      return true;
+      // _status = Status.Authenticating;
+      // notifyListeners();
+      // await auth
+      //     .createUserWithEmailAndPassword(
+      //         email: email.text.trim(), password: password.text.trim())
+      //     .then((result) async {
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //   await prefs.setString("id", result.user.uid);
+      //   _userServices.createAdmin(
+      //     id: result.user.uid,
+      //     name: name.text.trim(),
+      //     email: email.text.trim(),
+      //   );
+      // });
+      // Configuration.email =  email.text.trim();
+      // Configuration.name =  name.text.trim();
+      // return true;
     } catch (e) {
       _status = Status.Unauthenticated;
       notifyListeners();
@@ -89,10 +89,10 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future signOut() async {
-    auth.signOut();
-    _status = Status.Unauthenticated;
-    notifyListeners();
-    return Future.delayed(Duration.zero);
+    // auth.signOut();
+    // _status = Status.Unauthenticated;
+    // notifyListeners();
+    // return Future.delayed(Duration.zero);
   }
 
   void clearController() {
@@ -102,29 +102,29 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> reloadUserModel() async {
-    _userModel = await _userServices.getAdminById(user.uid);
+    // _userModel = await _userServices.getAdminById(user.uid);
     notifyListeners();
   }
 
   updateUserData(Map<String, dynamic> data) async {
-    _userServices.updateUserData(data);
+    // _userServices.updateUserData(data);
   }
 
-  _onStateChanged(User firebaseUser) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (firebaseUser == null) {
-      _status = Status.Unauthenticated;
-    } else {
-      _user = firebaseUser;
-      await prefs.setString("id", firebaseUser.uid);
+  // _onStateChanged(User firebaseUser) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   if (firebaseUser == null) {
+  //     _status = Status.Unauthenticated;
+  //   } else {
+  //     _user = firebaseUser;
+  //     await prefs.setString("id", firebaseUser.uid);
 
-      _userModel = await _userServices.getAdminById(user.uid).then((value) {
-        _status = Status.Authenticated;
-        return value;
-      });
-    }
-    notifyListeners();
-  }
+  //     _userModel = await _userServices.getAdminById(user.uid).then((value) {
+  //       _status = Status.Authenticated;
+  //       return value;
+  //     });
+  //   }
+  //   notifyListeners();
+  // }
 
   String validateEmail(String value) {
     value = value.trim();
