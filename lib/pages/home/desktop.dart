@@ -61,10 +61,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Nom Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -77,16 +74,12 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Date de creation  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  CustomEditText(
-                      rapportNumberController: dateCreationController),
+                  CustomEditText(rapportNumberController: dateCreationController),
                 ],
               ),
               Column(
@@ -94,10 +87,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Type Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -154,10 +144,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Matricule cnss  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -178,10 +165,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Matricule fiscale  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -194,16 +178,12 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Email Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  CustomEditText(
-                      rapportNumberController: rapportNumberController),
+                  CustomEditText(rapportNumberController: rapportNumberController),
                 ],
               ),
               Column(
@@ -211,10 +191,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Numero RNE  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -227,10 +204,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Fax Association  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -243,14 +217,22 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
           SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: CustomText(
-              text: "Informations responsable :",
-              size: 30,
-              weight: FontWeight.bold,
-              color: Colors.black,
-            ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: CustomText(
+                  text: "Représentant légal :",
+                  size: 30,
+                  weight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                width: 50,
+              ),
+              DropDownOfResponsableType()
+            ],
           ),
           SizedBox(
             height: 20,
@@ -263,10 +245,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Nom et prénom  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -279,10 +258,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Cin  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -295,10 +271,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Email  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -311,10 +284,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 children: [
                   Text(
                     "Téléphone  ",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
@@ -389,8 +359,7 @@ class RowUploadFile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 10),
       padding: EdgeInsets.only(left: 200, right: 200, top: 20, bottom: 20),
-      color:
-          odd ? Colors.blueGrey.withOpacity(0.2) : Colors.blue.withOpacity(0.2),
+      color: odd ? Colors.blueGrey.withOpacity(0.2) : Colors.blue.withOpacity(0.2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -403,6 +372,49 @@ class RowUploadFile extends StatelessWidget {
           ),
           FilePickerDemo(),
         ],
+      ),
+    );
+  }
+}
+
+class DropDownOfResponsableType extends StatefulWidget {
+  const DropDownOfResponsableType({Key key}) : super(key: key);
+
+  @override
+  State<DropDownOfResponsableType> createState() => _DropDownOfResponsableTypeState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
+  String dropdownValue = 'Trésorerie';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      width: 300,
+      child: DropdownButton<String>(
+        isExpanded: true,
+        value: dropdownValue,
+        icon: const Icon(Icons.account_box),
+        iconSize: 40,
+        elevation: 16,
+        style: const TextStyle(color: Colors.black),
+        underline: Container(
+          height: 2,
+          color: Colors.black,
+        ),
+        onChanged: (String newValue) {
+          setState(() {
+            dropdownValue = newValue;
+          });
+        },
+        items: <String>['Trésorerie', 'Président', 'Secrétaire'].map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Container(margin: EdgeInsets.all(10), child: Text(value, style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold))),
+          );
+        }).toList(),
       ),
     );
   }
@@ -440,8 +452,7 @@ class CustomEditText extends StatelessWidget {
           maxLines: 1,
           controller: rapportNumberController,
           textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 10.0),

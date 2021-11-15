@@ -14,22 +14,17 @@ class RowHeader extends StatelessWidget {
         Image.asset(
           'images/logocdc.png',
           fit: BoxFit.contain,
-          height: 260,
+          height: 180,
         ),
-        Text(
-            "La cour des comptes pilier de transparence et de responsabilisation   \n  dans l\'utilisation des fonds publics au service des citoyens.",
+        Text("La cour des comptes pilier de transparence \n et de redevabilité dans la secteur public.",
             maxLines: 2,
             //overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: Colors.white)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
         Image.asset(
           'images/tunisflag.png',
           fit: BoxFit.contain,
-          height: 300,
+          height: 220,
         ),
-        
       ],
     );
   }

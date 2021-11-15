@@ -22,11 +22,8 @@ class LayoutTemplate extends StatelessWidget {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-              accountEmail: Text((Configuration.email != null)
-                  ? Configuration.email
-                  : "associations@gmail.com"),
-              accountName:
-                  Text((Configuration.name != null) ? Configuration.name : " "),
+              accountEmail: Text((Configuration.email != null) ? Configuration.email : "associations@gmail.com"),
+              accountName: Text((Configuration.name != null) ? Configuration.name : " "),
             ),
             ListTile(
               title: Text("profile"),
@@ -46,7 +43,7 @@ class LayoutTemplate extends StatelessWidget {
                   child: Navigator(
                     key: locator<NavigationService>().navigatorKey,
                     onGenerateRoute: generateRoute,
-                    initialRoute: HomeRoute,
+                    initialRoute: OnlineDepositeRoute,
                   ),
                 )
               ],

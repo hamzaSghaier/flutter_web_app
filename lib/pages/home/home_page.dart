@@ -14,8 +14,8 @@ class HomePage extends StatelessWidget {
     desktop: 1460,
     watch: 300
   ),
-      mobile: HomePageMobile(),
-      tablet: HomePageTablet(),
+      mobile: SizeConstraintWidget(child: HomePageDesktop()),
+      tablet: SizeConstraintWidget(child: HomePageDesktop()),
       desktop: SizeConstraintWidget(child: HomePageDesktop()),
     );
   }

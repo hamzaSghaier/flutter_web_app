@@ -70,7 +70,6 @@ class DownloadCardB extends StatelessWidget {
                 weight: FontWeight.bold,
                 color: Colors.white,
               ),
- 
               SizedBox(height: 10),
             ],
           ),
@@ -232,30 +231,12 @@ class DownloadCard45 extends StatelessWidget {
                   children: [
                     new TextSpan(
                       text: "-Etats financier ",
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                      recognizer: new TapGestureRecognizer()
-                        ..onTap = () {
-                          var blob =
-                              html.Blob(["data"], 'text/plain', 'native');
-                          final url = html.Url.createObjectUrl(
-                              "http://www.courdescomptes.nat.tn/Fr/static/fr/image/png/logo.png");
-                          final anchor = html.document.createElement('a')
-                              as html.AnchorElement
-                            ..href = url
-                            ..style.display = 'none'
-                            ..download = 'some_name.png';
-                          html.document.body.children.add(anchor);
-                          anchor.click();
-                          html.document.body.children.remove(anchor);
-                          html.Url.revokeObjectUrl(url);
-                        },
+                      style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
+
               // RichText(
               //  text :  "-Etats financier ",
               //   style: TextStyle(

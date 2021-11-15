@@ -20,7 +20,7 @@ class CardsList extends StatelessWidget {
     TablesProvider tablesProvider = Provider.of<TablesProvider>(context);
 
     return Container(
-      height: 420,
+      height: 320,
       color: Color.fromRGBO(15, 67, 88, 1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,8 +36,7 @@ class CardsList extends StatelessWidget {
                   title: "Dépot en ligne des rapports",
                   onPressed: () {
                     appProvider.changeCurrentPage(DisplayedPage.ONLINEDEPOSITE);
-                    locator<NavigationService>()
-                        .navigateTo(OnlineDepositeRoute);
+                    locator<NavigationService>().navigateTo(OnlineDepositeRoute);
                   },
                 ),
                 CardItem(
@@ -52,10 +51,8 @@ class CardsList extends StatelessWidget {
                   icon: Icons.delivery_dining,
                   title: "Téléchargement normes comptable",
                   onPressed: () {
-                    appProvider.changeCurrentPage(
-                        DisplayedPage.DOWNLOADACCOUNTINGSTANDARDS);
-                    locator<NavigationService>()
-                        .navigateTo(DownloadAccountingStandardsRoute);
+                    appProvider.changeCurrentPage(DisplayedPage.DOWNLOADACCOUNTINGSTANDARDS);
+                    locator<NavigationService>().navigateTo(DownloadAccountingStandardsRoute);
                   },
                 ),
 
@@ -109,8 +106,7 @@ class CardsList extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
+                              MaterialPageRoute(builder: (context) => LoginPage()),
                             );
                           },
                         ),

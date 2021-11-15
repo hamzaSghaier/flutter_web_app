@@ -1,3 +1,4 @@
+import 'package:ecommerce_admin_tut/helpers/loaders.dart';
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/pages/home/RowHeader.dart';
 import 'package:ecommerce_admin_tut/provider/auth.dart';
@@ -16,11 +17,7 @@ class LoginPage extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color.fromRGBO(15, 67, 88, 1),
-        Color.fromRGBO(10, 54, 71, 1)
-      ])),
+      decoration: BoxDecoration(gradient: LinearGradient(colors: [Color.fromRGBO(15, 67, 88, 1), Color.fromRGBO(10, 54, 71, 1)])),
       child: authProvider.status == Status.Authenticating
           ? Loading()
           : Scaffold(
@@ -38,12 +35,7 @@ class LoginPage extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey,
-                                  offset: Offset(0, 3),
-                                  blurRadius: 24)
-                            ]),
+                            boxShadow: [BoxShadow(color: Colors.grey, offset: Offset(0, 3), blurRadius: 24)]),
                         height: 400,
                         width: 500,
                         child: Column(
@@ -58,19 +50,14 @@ class LoginPage extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
                               child: Container(
-                                decoration:
-                                    BoxDecoration(color: Colors.grey[200]),
+                                decoration: BoxDecoration(color: Colors.grey[200]),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: TextField(
                                     controller: authProvider.email,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Identifiant',
-                                        icon: Icon(Icons.email_outlined)),
+                                    decoration: InputDecoration(border: InputBorder.none, hintText: 'Identifiant', icon: Icon(Icons.email_outlined)),
                                   ),
                                 ),
                               ),
@@ -79,19 +66,14 @@ class LoginPage extends StatelessWidget {
                               height: 20,
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
                               child: Container(
-                                decoration:
-                                    BoxDecoration(color: Colors.grey[200]),
+                                decoration: BoxDecoration(color: Colors.grey[200]),
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: TextField(
                                     controller: authProvider.password,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'Mot de passe',
-                                        icon: Icon(Icons.lock_open)),
+                                    decoration: InputDecoration(border: InputBorder.none, hintText: 'Mot de passe', icon: Icon(Icons.lock_open)),
                                   ),
                                 ),
                               ),
@@ -116,8 +98,7 @@ class LoginPage extends StatelessWidget {
                               height: 40,
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
                               child: Container(
                                 decoration: BoxDecoration(color: Colors.indigo),
                                 child: FlatButton(
@@ -130,16 +111,17 @@ class LoginPage extends StatelessWidget {
                                     //   return;
                                     // }
                                     // authProvider.clearController();
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                      return ColorLoader2();
+                                    }));
 
-                                    locator<NavigationService>()
-                                        .globalNavigateTo(LayoutRoute, context);
+                                    // locator<NavigationService>()
+                                    //     .globalNavigateTo(LayoutRoute, context);
                                   },
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4),
+                                    padding: const EdgeInsets.symmetric(vertical: 4),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         CustomText(
                                           text: "Connexion",
@@ -168,9 +150,7 @@ class LoginPage extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                       onTap: () {
-                                        locator<NavigationService>()
-                                            .globalNavigateTo(
-                                                RegistrationRoute, context);
+                                        locator<NavigationService>().globalNavigateTo(RegistrationRoute, context);
                                       },
                                       child: CustomText(
                                         text: "Inscrivez-vous ici. ",
