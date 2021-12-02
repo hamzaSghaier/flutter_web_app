@@ -51,7 +51,7 @@ class AfterRegistration extends StatelessWidget {
                           children: [
                             CustomText(
                               text:
-                                  "Votre demande d'inscription  est enregistrer et en cours de traitement. ",
+                                  "Votre demande d'inscription  est enregistré et en cours de traitement. ",
                               size: 22,
                               weight: FontWeight.bold,
                             ),

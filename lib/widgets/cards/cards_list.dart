@@ -49,7 +49,7 @@ class CardsList extends StatelessWidget {
                 ),
                 CardItem(
                   icon: Icons.delivery_dining,
-                  title: "Téléchargement normes comptable",
+                  title: "Téléchargement normes comptables",
                   onPressed: () {
                     appProvider.changeCurrentPage(DisplayedPage.DOWNLOADACCOUNTINGSTANDARDS);
                     locator<NavigationService>().navigateTo(DownloadAccountingStandardsRoute);
@@ -67,7 +67,7 @@ class CardsList extends StatelessWidget {
                 // ),
                 CardItem(
                   icon: Icons.delivery_dining,
-                  title: "Messageries",
+                  title: "Messagerie",
                   onPressed: () {
                     appProvider.changeCurrentPage(DisplayedPage.COURRIERS);
                     locator<NavigationService>().navigateTo(CourriersRoute);

@@ -21,7 +21,7 @@ class BackendState with ChangeNotifier {
     _status = DataStatus.Loading;
     notifyListeners();
     try {
-      await BackendService.initBackendData();
+      await BackendService2.initBackendData();
       _status = DataStatus.Loaded;
       notifyListeners();
     } catch (e, s) {
@@ -37,7 +37,7 @@ class BackendState with ChangeNotifier {
   }
 }
 
-class BackendService {
+class BackendService2 {
   static Future<bool> initBackendData() async {
     final response1 =
         await http.get(Uri.parse(Configuration.host + 'trainingexercises/'));

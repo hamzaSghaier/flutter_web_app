@@ -9,8 +9,22 @@ import 'package:ecommerce_admin_tut/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  bool _waiting = true;
+  callme() async {
+    await Future.delayed(Duration(seconds: 3));
+
+    setState(() {
+      _waiting = false;
+    });
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +87,9 @@ class LoginPage extends StatelessWidget {
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: TextField(
                                     controller: authProvider.password,
+                                    obscureText: true,
+                                    enableSuggestions: false,
+                                    autocorrect: false,
                                     decoration: InputDecoration(border: InputBorder.none, hintText: 'Mot de passe', icon: Icon(Icons.lock_open)),
                                   ),
                                 ),
@@ -111,10 +128,12 @@ class LoginPage extends StatelessWidget {
                                     //   return;
                                     // }
                                     // authProvider.clearController();
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                      return ColorLoader2();
-                                    }));
+                                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                    //   return ColorLoader2();
+                                    // }));
 
+                                    _showErrorDialog(context, " ");
+                                    callme();
                                     // locator<NavigationService>()
                                     //     .globalNavigateTo(LayoutRoute, context);
                                   },
@@ -168,6 +187,36 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
+    );
+  }
+
+  void _showErrorDialog(BuildContext context, String msg) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+            content: Container(
+                height: 200,
+                width: 1000,
+                child: // Load a Lottie file from a remote url
+                    Center(
+                  child: _waiting
+                      ? ColorLoader2()
+                      : Text("Veuillez vérifier les données saisies. $msg",
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
+                )),
+            actions: <Widget>[
+              // ignore: deprecated_member_use
+              _waiting
+                  ? Container()
+                  : FlatButton(
+                      child: Text('Réessayer', style: TextStyle(color: Colors.green, fontWeight: FontWeight.normal, fontSize: 25)),
+                      onPressed: () => {Navigator.of(context).pop()},
+                    ),
+            ]);
+      },
     );
   }
 }

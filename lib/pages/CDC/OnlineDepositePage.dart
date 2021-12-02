@@ -92,7 +92,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                 child: Row(
                   children: [
                     Text(
-                      " - Tableau d'eclaircissement  ",
+                      " - Tableaux d'éclaircissement  ",
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
                     ),
                     SizedBox(
@@ -123,7 +123,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                 child: Row(
                   children: [
                     Text(
-                      " - Tableau d'utilisation de subventions  ",
+                      " - Tableau d'utilisation des subventions  ",
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
                     ),
                     SizedBox(
@@ -202,7 +202,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
           Padding(
             padding: const EdgeInsets.all(14),
             child: CustomText(
-              text: "Rapport financière :",
+              text: "Rapport financier :",
               size: 30,
               weight: FontWeight.bold,
               color: Colors.black,
@@ -442,13 +442,13 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("République tunisienne ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 24)),
-                            Text(" Cour des comptes ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 24)),
+                            Text("La cour des comptes ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 24)),
                           ],
                         ),
                         Container(
                           child: Column(
                             children: [
-                              Text("le 14/11/2021", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 24)),
+                              Text("Le 20/11/2021", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 24)),
                               Container(
                                 child: Row(
                                   children: [
@@ -502,16 +502,16 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                     SizedBox(
                       height: 100,
                     ),
-                    Text("Monsieur le président", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 22)),
+                    Text("Monsieur/Madame", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 22)),
                     SizedBox(
                       height: 30,
                     ),
-                    Text("Vous avez envoyé avec succès le rapport financier et moral le  14/11/2021",
+                    Text("Vous avez envoyé avec succès le rapport financier et moral le  20/11/2021",
                         style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 22)),
                     SizedBox(
                       height: 20,
                     ),
-                    Text("Je vous prie d'agréer,Monsieur Le Président de l'association Jamaity ,l'assurance de ma haute considération.",
+                    Text("Je vous prie d'agréer, l'assurance de ma haute considération.",
                         style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 18)),
                   ],
                 ),

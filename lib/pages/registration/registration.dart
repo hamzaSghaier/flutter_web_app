@@ -1,9 +1,12 @@
+import 'package:ecommerce_admin_tut/helpers/backend.dart';
 import 'package:ecommerce_admin_tut/helpers/enumerators.dart';
+import 'package:ecommerce_admin_tut/helpers/loaders.dart';
 import 'package:ecommerce_admin_tut/pages/CDC/OnlineDepositePage.dart';
 import 'package:ecommerce_admin_tut/pages/CDC/association_entity.dart';
 import 'package:ecommerce_admin_tut/pages/CDC/backend.dart';
 import 'package:ecommerce_admin_tut/pages/home/AfterRegister.dart';
 import 'package:ecommerce_admin_tut/pages/home/FilePickerRegister.dart';
+import 'package:ecommerce_admin_tut/pages/login/login.dart';
 import 'package:ecommerce_admin_tut/provider/app_provider.dart';
 import 'package:ecommerce_admin_tut/provider/auth.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
@@ -33,15 +36,23 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController prenomController = TextEditingController();
   TextEditingController cinController = TextEditingController();
   TextEditingController telephoneController = TextEditingController();
+  final GlobalKey<FilePickerRegisterState> _keypublicationJorde = GlobalKey();
+  final GlobalKey<FilePickerRegisterState> _keypvElictif = GlobalKey();
+  final GlobalKey<FilePickerRegisterState> _keystatus = GlobalKey();
 
   bool isValiData() {
+    //print("111 ${_keypublicationJorde.currentState.getPath()}");
+
     if (raisonSocialController.text.isNotEmpty &&
-        villeController.text.isNotEmpty &&
-        gouvernoratController.text.isNotEmpty &&
-        matriculeController.text.isNotEmpty &&
-        typeController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty)
+            villeController.text.isNotEmpty &&
+            gouvernoratController.text.isNotEmpty &&
+            matriculeController.text.isNotEmpty &&
+            typeController.text.isNotEmpty &&
+            emailController.text.isNotEmpty
+        // _keypublicationJorde.currentState.directoryPath != null &&
+        // _keypvElictif.currentState.directoryPath != null &&
+        // _keystatus.currentState.directoryPath != null
+        )
       return true;
     else
       return false;
@@ -196,15 +207,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(
                       height: 20,
                     ),
-                    FilePickerRegister(name: "Statut"),
+                    FilePickerRegister(
+                      name: "Statut",
+                      key: _keystatus,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    FilePickerRegister(name: "Publication jort"),
+                    FilePickerRegister(
+                      name: "Publication jort",
+                      key: _keypublicationJorde,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    FilePickerRegister(name: "PV électif"),
+                    FilePickerRegister(
+                      name: "PV électif",
+                      key: _keypvElictif,
+                    ),
                     // Padding(
                     //   padding: const EdgeInsets.symmetric(horizontal: 20),
                     //   child: Container(
@@ -356,45 +376,38 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         // ignore: deprecated_member_use
                         child: FlatButton(
                           onPressed: () async {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                              return AfterRegistration();
-                            }));
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                            //   return AfterRegistration();
+                            // }));
 
-                            //   if (isValiData()) {
-                            // if (true) {
-                            //   BackendApi.signIn(
-                            //           raisonSocialController.text,
-                            //           villeController.text,
-                            //           gouvernoratController.text,
-                            //           matriculeController.text,
-                            //           typeController.text,
-                            //           emailController.text,
-                            //           passwordController.text)
-                            //       .then((value) => {
-                            //             Navigator.of(context).push(
-                            //                 MaterialPageRoute(
-                            //                     builder: (context) {
-                            //               return OnlineDepositePage();
-                            //             }))
-                            //             // appProvider.changeCurrentPage(
-                            //             //     DisplayedPage.ONLINEDEPOSITE),
-                            //             // locator<NavigationService>()
-                            //             //     .navigateTo(OnlineDepositeRoute)
-                            //           });
-                            // }
-
-                            //   if (!await authProvider.signUp()) {
-                            //     ScaffoldMessenger.of(context).showSnackBar(
-                            //         SnackBar(
-                            //             content:
-                            //                 Text("Registration failed!")));
-                            //     return;
-                            //   }
-
-                            //   locator<NavigationService>()
-                            //       .globalNavigateTo(LayoutRoute, context);
-
-                            //
+                            if (isValiData()) {
+                              _showLoadingDialog(context);
+                              if (true) {
+                                BackendService.signIn(
+                                        raisonSocialController.text,
+                                        villeController.text,
+                                        gouvernoratController.text,
+                                        matriculeController.text,
+                                        typeController.text,
+                                        emailController.text,
+                                        _keypublicationJorde.currentState.getPath(),
+                                        _keypvElictif.currentState.getPath(),
+                                        _keystatus.currentState.getPath())
+                                    .then((value) => {
+                                          print('valuee $value'),
+                                          if (value["code"] == 200)
+                                            {
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                                return AfterRegistration();
+                                              }))
+                                            }
+                                          else
+                                            {_showErrorDialog(context, " ")}
+                                        });
+                              }
+                            } else {
+                              _showErrorDialog(context, " ");
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -491,4 +504,54 @@ class _DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
       ),
     );
   }
+}
+
+void _showLoadingDialog(BuildContext context) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        content: Container(
+          height: 500,
+          width: 1000,
+          child: // Load a Lottie file from a remote url
+              Center(
+            child: Container(
+              // margin: EdgeInsets.all(40),
+              //width: 400,
+              child: ColorLoader2(),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void _showErrorDialog(BuildContext context, String msg) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+          content: Container(
+              height: 200,
+              width: 1000,
+              child: // Load a Lottie file from a remote url
+                  Center(
+                child: Text("Veuillez vérifier les données saisies. $msg",
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
+              )),
+          actions: <Widget>[
+            // ignore: deprecated_member_use
+            FlatButton(
+              child: Text('Réessayer', style: TextStyle(color: Colors.green, fontWeight: FontWeight.normal, fontSize: 25)),
+              onPressed: () => {Navigator.of(context).pop()},
+            ),
+          ]);
+    },
+  );
 }

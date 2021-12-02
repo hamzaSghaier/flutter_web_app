@@ -102,7 +102,7 @@ class _MailtoDemoState extends State<MailtoDemo> {
               horizontal: 80,
             ),
             child: CupertinoButton.filled(
-              child: Text('Ouvrir le client de messagerie'),
+              child: Text('Ouvrir le client de messageries'),
               onPressed: () async {
                 final url = Mailto(
                   to: to,

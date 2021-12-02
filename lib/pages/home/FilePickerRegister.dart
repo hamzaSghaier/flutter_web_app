@@ -1,3 +1,119 @@
+// import 'package:flutter/material.dart';
+// import 'dart:html' as html;
+// import 'dart:typed_data';
+// import 'dart:async';
+// import 'dart:convert';
+// import 'package:http_parser/http_parser.dart';
+// import 'package:http/http.dart' as http;
+
+// class FilePickerRegister extends StatefulWidget {
+//   final String name;
+
+//   const FilePickerRegister({Key key, this.name}) : super(key: key);
+//   @override
+//   createState() => FilePickerRegisterState();
+// }
+
+// class FilePickerRegisterState extends State<FilePickerRegister> {
+//   List<int> _selectedFile;
+//   Uint8List _bytesData;
+//   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+//   startWebFilePicker() async {
+//     html.InputElement uploadInput = html.FileUploadInputElement();
+//     uploadInput.multiple = true;
+//     uploadInput.draggable = true;
+//     uploadInput.click();
+
+//     uploadInput.onChange.listen((e) {
+//       final files = uploadInput.files;
+//       final file = files[0];
+//       final reader = new html.FileReader();
+
+//       reader.onLoadEnd.listen((e) {
+//         _handleResult(reader.result);
+//       });
+//       reader.readAsDataUrl(file);
+//     });
+//   }
+
+//   void _handleResult(Object result) {
+//     setState(() {
+//       _bytesData = Base64Decoder().convert(result.toString().split(",").last);
+//       _selectedFile = _bytesData;
+//     });
+//   }
+
+//   List<int> getPath() {
+//     return _selectedFile;
+//   }
+
+//   // Future<String> makeRequest() async {
+//   //   var url = Uri.parse("http://192.168.23.10/upload_api/web/app_dev.php/api/save-file/");
+//   //   var request = new http.MultipartRequest("POST", url);
+//   //   request.files.add(
+//   //       await http.MultipartFile.fromBytes('file', _selectedFile, contentType: new MediaType('application', 'octet-stream'), filename: widget.name));
+
+//   //   request.send().then((response) {
+//   //     print("test");
+//   //     print(response.statusCode);
+//   //     if (response.statusCode == 200) print("Uploaded!");
+//   //   });
+//   // }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+
+//     return SafeArea(
+//       child: Container(
+//         child: new Form(
+//           autovalidate: true,
+//           key: _formKey,
+//           child: Padding(
+//             padding: const EdgeInsets.only(top: 16.0, left: 28),
+//             child: new Container(
+//                 width: 350,
+//                 child: Column(children: <Widget>[
+//                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+//                     MaterialButton(
+//                       color: Colors.pink,
+//                       elevation: 8,
+//                       highlightElevation: 2,
+//                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+//                       textColor: Colors.white,
+//                       child: Text('Select a file'),
+//                       onPressed: () {
+//                         startWebFilePicker();
+//                       },
+//                     ),
+//                     Divider(
+//                       color: Colors.teal,
+//                     ),
+//                     RaisedButton(
+//                       color: Colors.purple,
+//                       elevation: 8.0,
+//                       textColor: Colors.white,
+//                       onPressed: () {
+//                         //makeRequest();
+//                       },
+//                       child: Text('Send file to server'),
+//                     ),
+//                   ])
+//                 ])),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,14 +123,14 @@ class FilePickerRegister extends StatefulWidget {
 
   const FilePickerRegister({Key key, this.name}) : super(key: key);
   @override
-  _FilePickerRegisterState createState() => _FilePickerRegisterState();
+  FilePickerRegisterState createState() => FilePickerRegisterState();
 }
 
-class _FilePickerRegisterState extends State<FilePickerRegister> {
+class FilePickerRegisterState extends State<FilePickerRegister> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _fileName;
   List<PlatformFile> _paths;
-  String _directoryPath;
+  String directoryPath;
   String _extension;
   bool _loadingPath = false;
   bool _multiPick = false;
@@ -27,18 +143,32 @@ class _FilePickerRegisterState extends State<FilePickerRegister> {
     _controller.addListener(() => _extension = _controller.text);
   }
 
+  List<int> getPath() {
+    print(_paths);
+    print(_paths.elementAt(0));
+    // Uint8List uploadfile = result.files.single.bytes;
+
+    if (_paths != null && _paths.isNotEmpty) {
+      print("byyyteeess ${_paths.elementAt(0).bytes.toString()}");
+      final List<int> bytesData = Base64Decoder().convert(_paths.elementAt(0).bytes.toString().split(",").last);
+            print("byyytestete ${bytesData}");
+
+      return bytesData;
+    } else
+      return null;
+  }
+
   void _openFileExplorer() async {
     setState(() => _loadingPath = true);
     try {
-      _directoryPath = null;
+      directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
         type: _pickingType,
         allowMultiple: _multiPick,
-        allowedExtensions: (_extension?.isNotEmpty ?? false)
-            ? _extension?.replaceAll(' ', '').split(',')
-            : null,
+        allowedExtensions: (_extension?.isNotEmpty ?? false) ? _extension?.replaceAll(' ', '').split(',') : null,
       ))
           ?.files;
+      print("ppppp ${_paths.elementAt(0).toString()}");
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     } catch (ex) {
@@ -57,9 +187,7 @@ class _FilePickerRegisterState extends State<FilePickerRegister> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: result ? Colors.green : Colors.red,
-          content: Text((result
-              ? 'Temporary files removed with success.'
-              : 'Failed to clean temporary files')),
+          content: Text((result ? 'Temporary files removed with success.' : 'Failed to clean temporary files')),
         ),
       );
     });
@@ -67,7 +195,7 @@ class _FilePickerRegisterState extends State<FilePickerRegister> {
 
   void _selectFolder() {
     FilePicker.platform.getDirectoryPath().then((value) {
-      setState(() => _directoryPath = value);
+      setState(() => directoryPath = value);
     });
   }
 
@@ -103,10 +231,7 @@ class _FilePickerRegisterState extends State<FilePickerRegister> {
                       children: [
                         Text(
                           widget.name,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
                           width: 20,
@@ -124,15 +249,9 @@ class _FilePickerRegisterState extends State<FilePickerRegister> {
                   ),
                   Center(
                     child: Text(
-                      _paths != null && _paths.isNotEmpty
-                          ? "  fichier : " + _fileName ??
-                              "..." + "${_paths.elementAt(0)}"
-                          : 'Aucun fichier choisi',
+                      _paths != null && _paths.isNotEmpty ? "  fichier : " + _fileName ?? "..." + "${_paths.elementAt(0)}" : 'Aucun fichier choisi',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   )
                 ],

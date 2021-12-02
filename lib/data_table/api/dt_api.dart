@@ -14,13 +14,13 @@ class DataTableApi {
     final _completer = Completer<List<UserModel>>();
 
     try {
-      final resp = await http.get(_url);
+      //final resp = await http.get(_url);
 
-      if (resp.statusCode == 200) {
-        //
-        final _data = userModelFromJson(resp.body);
-        _completer.complete(_data);
-      }
+      // if (resp.statusCode == 200) {
+      //   //
+      //   final _data = userModelFromJson(resp.body);
+      //   _completer.complete(_data);
+      // }
     } catch (exc) {
       _completer.completeError(<UserModel>[]);
     }
