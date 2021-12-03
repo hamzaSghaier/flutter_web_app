@@ -181,18 +181,6 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
           SizedBox(
             height: 40,
           ),
-          // Row(
-          //   children: [
-          //     Text(
-          //       "N° Rapport :  ",
-          //       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-          //     ),
-          //     SizedBox(
-          //       width: 20,
-          //     ),
-          //     CustomEditText(rapportNumberController: rapportNumberController),
-          //   ],
-          // ),
           SizedBox(
             height: 20,
           ),
@@ -211,20 +199,6 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
           SizedBox(
             height: 20,
           ),
-          // Container(
-          //   margin: EdgeInsets.only(left: 300),
-          //   child: Row(
-          //     children: [
-          //       CustomText(
-          //         text: "Charger tableau excel (balance financière) : ",
-          //         size: 23,
-          //         weight: FontWeight.bold,
-          //         color: Colors.black,
-          //       ),
-          //       FilePickerDemo(),
-          //     ],
-          //   ),
-          // ),
           SizedBox(
             height: 60,
           ),
@@ -326,7 +300,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                     onPrimary: Colors.black,
                     minimumSize: Size(300, 80) // foreground
                     ),
-                onPressed: () => {_showDechargeDialog()},
+                onPressed: () => {_showDialog()},
                 child: Row(
                   children: [
                     CustomText(
@@ -375,13 +349,9 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                     ),
                     Center(
                       child: Container(
-                        //  color: Colors.red,
-                        // margin: EdgeInsets.only(
-                        //   left: 200,
-                        // ),
                         child: LinearPercentIndicator(
-                          //  padding: const EdgeInsets.symmetric(horizontal: 100.0),
                           width: 400.0,
+                          onAnimationEnd: () => {Navigator.of(context).pop(), _showDechargeDialog()},
                           animation: true,
                           animationDuration: 8000,
                           lineHeight: 30.0,
@@ -448,7 +418,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                         Container(
                           child: Column(
                             children: [
-                              Text("Le 20/11/2021", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 24)),
+                              Text("Le 04/12/2021", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 24)),
                               Container(
                                 child: Row(
                                   children: [
@@ -506,7 +476,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                     SizedBox(
                       height: 30,
                     ),
-                    Text("Vous avez envoyé avec succès le rapport financier et moral le  20/11/2021",
+                    Text("Vous avez envoyé avec succès le rapport financier et moral le  04/12/2021",
                         style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 22)),
                     SizedBox(
                       height: 20,
@@ -533,7 +503,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                 ],
               ),
               onPressed: () async {
-                var url = "https://we.tl/t-jmROwi4lkV";
+                var url = "http://137.74.219.115:8888/cdc/templates/subvontion";
                 if (await canLaunch(url)) {
                   await launch(url);
                 } else {

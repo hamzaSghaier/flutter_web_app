@@ -39,7 +39,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final GlobalKey<FilePickerRegisterState> _keypublicationJorde = GlobalKey();
   final GlobalKey<FilePickerRegisterState> _keypvElictif = GlobalKey();
   final GlobalKey<FilePickerRegisterState> _keystatus = GlobalKey();
-
+  final GlobalKey<DropDownOfResponsableTypeState> _keyResponsable = GlobalKey();
+  final GlobalKey<DropDownOfTypeAssocState> _keyTypeAssoc = GlobalKey();
   bool isValiData() {
     //print("111 ${_keypublicationJorde.currentState.getPath()}");
 
@@ -47,8 +48,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
             villeController.text.isNotEmpty &&
             gouvernoratController.text.isNotEmpty &&
             matriculeController.text.isNotEmpty &&
-            typeController.text.isNotEmpty &&
-            emailController.text.isNotEmpty
+            emailController.text.isNotEmpty &&
+            nomController.text.isNotEmpty &&
+            cinController.text.isNotEmpty &&
+            prenomController.text.isNotEmpty &&
+            telephoneController.text.isNotEmpty
+
         // _keypublicationJorde.currentState.directoryPath != null &&
         // _keypvElictif.currentState.directoryPath != null &&
         // _keystatus.currentState.directoryPath != null
@@ -56,22 +61,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       return true;
     else
       return false;
-  }
-
-  FutureBuilder<Association> buildFutureBuilder() {
-    return FutureBuilder<Association>(
-      future: BackendApi.signIn(raisonSocialController.text, villeController.text, gouvernoratController.text, matriculeController.text,
-          typeController.text, emailController.text, passwordController.text),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text("Connection success");
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        return CircularProgressIndicator();
-      },
-    );
   }
 
   @override
@@ -186,24 +175,41 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                        decoration: BoxDecoration(color: Colors.grey[200]),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: TextField(
-                            controller: typeController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Type',
-                              // icon: Icon(Icons.person_outline)
-                            ),
-                          ),
+                    Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: CustomText(
+                          text: "Type :",
+                          size: 16,
+                          weight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                    ),
-
+                      SizedBox(
+                        width: 50,
+                      ),
+                      DropDownOfTypeAssoc(
+                        key: _keyTypeAssoc,
+                      )
+                    ]),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                    //   child: Container(
+                    //     decoration: BoxDecoration(color: Colors.grey[200]),
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.only(left: 8.0),
+                    //       child: TextField(
+                    //         controller: typeController,
+                    //         decoration: InputDecoration(
+                    //           border: InputBorder.none,
+                    //           hintText: 'Type',
+                    //           // icon: Icon(Icons.person_outline)
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // DropDownOfTypeAssoc(),
                     SizedBox(
                       height: 20,
                     ),
@@ -225,22 +231,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       name: "PV électif",
                       key: _keypvElictif,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                    //   child: Container(
-                    //     decoration: BoxDecoration(color: Colors.grey[200]),
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.only(left: 8.0),
-                    //       child: TextField(
-                    //         controller: passwordController,
-                    //         decoration: InputDecoration(
-                    //             border: InputBorder.none,
-                    //             hintText: 'Password',
-                    //             icon: Icon(Icons.lock_open)),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 40,
                     ),
@@ -258,7 +248,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         SizedBox(
                           width: 50,
                         ),
-                        DropDownOfResponsableType()
+                        DropDownOfResponsableType(
+                          key: _keyResponsable,
+                        )
                       ],
                     ),
                     SizedBox(
@@ -304,7 +296,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       ],
                     ),
-
                     SizedBox(
                       height: 20,
                     ),
@@ -348,11 +339,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       ],
                     ),
-
                     SizedBox(
                       height: 20,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
@@ -384,26 +373,31 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               _showLoadingDialog(context);
                               if (true) {
                                 BackendService.signIn(
-                                        raisonSocialController.text,
-                                        villeController.text,
-                                        gouvernoratController.text,
-                                        matriculeController.text,
-                                        typeController.text,
-                                        emailController.text,
-                                        _keypublicationJorde.currentState.getPath(),
-                                        _keypvElictif.currentState.getPath(),
-                                        _keystatus.currentState.getPath())
-                                    .then((value) => {
-                                          print('valuee $value'),
-                                          if (value["code"] == 200)
-                                            {
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                                return AfterRegistration();
-                                              }))
-                                            }
-                                          else
-                                            {_showErrorDialog(context, " ")}
-                                        });
+                                  raisonSocialController.text,
+                                  villeController.text,
+                                  gouvernoratController.text,
+                                  matriculeController.text,
+                                  _keyTypeAssoc.currentState.getTypeAssoc(),
+                                  emailController.text,
+                                  nomController.text,
+                                  prenomController.text,
+                                  cinController.text,
+                                  telephoneController.text,
+                                  _keyResponsable.currentState.getResponsable(),
+                                  // _keypublicationJorde.currentState.getPath(),
+                                  // _keypvElictif.currentState.getPath(),
+                                  // _keystatus.currentState.getPath()
+                                ).then((value) => {
+                                      print('valuee $value'),
+                                      if (value["code"] == 200)
+                                        {
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                            return AfterRegistration();
+                                          }))
+                                        }
+                                      else
+                                        {_showErrorDialog(context, " ")}
+                                    });
                               }
                             } else {
                               _showErrorDialog(context, " ");
@@ -462,16 +456,76 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 }
 
+class DropDownOfTypeAssoc extends StatefulWidget {
+  const DropDownOfTypeAssoc({Key key}) : super(key: key);
+
+  @override
+  State<DropDownOfTypeAssoc> createState() => DropDownOfTypeAssocState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class DropDownOfTypeAssocState extends State<DropDownOfTypeAssoc> {
+  String dropdownValue = 'Citoyennité et gouvernance';
+
+  String getTypeAssoc() {
+    return dropdownValue;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: 300,
+      child: DropdownButton<String>(
+        isExpanded: true,
+        value: dropdownValue,
+        icon: const Icon(Icons.account_box),
+        iconSize: 1,
+        elevation: 16,
+        style: const TextStyle(color: Colors.black),
+        underline: Container(
+          height: 2,
+          color: Colors.black,
+        ),
+        onChanged: (String newValue) {
+          setState(() {
+            dropdownValue = newValue;
+          });
+        },
+        items: <String>[
+          'Agriculture',
+          'Aide aux handicapés',
+          'Aide humanitaire',
+          "Arts / Culture",
+          "Citoyennité et gouvernance",
+          "Droit de l\'enfant",
+          "Droit des femmes"
+        ].map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Container(
+                margin: EdgeInsets.all(7), child: Text(value, style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold))),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
 class DropDownOfResponsableType extends StatefulWidget {
   const DropDownOfResponsableType({Key key}) : super(key: key);
 
   @override
-  State<DropDownOfResponsableType> createState() => _DropDownOfResponsableTypeState();
+  State<DropDownOfResponsableType> createState() => DropDownOfResponsableTypeState();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
+class DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
   String dropdownValue = 'Trésorerie';
+
+  String getResponsable() {
+    return dropdownValue;
+  }
 
   @override
   Widget build(BuildContext context) {

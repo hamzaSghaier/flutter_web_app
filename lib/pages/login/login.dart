@@ -1,3 +1,4 @@
+import 'package:ecommerce_admin_tut/helpers/backend.dart';
 import 'package:ecommerce_admin_tut/helpers/loaders.dart';
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/pages/home/RowHeader.dart';
@@ -5,6 +6,7 @@ import 'package:ecommerce_admin_tut/provider/auth.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
+import 'package:ecommerce_admin_tut/widgets/layout/layout.dart';
 import 'package:ecommerce_admin_tut/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,20 @@ class _LoginPageState extends State<LoginPage> {
       _waiting = false;
     });
     setState(() {});
+  }
+  TextEditingController loginController = TextEditingController();
+
+  TextEditingController psswordController = TextEditingController();
+    bool isValiData() {
+    
+
+    if (loginController.text.isNotEmpty &&
+            psswordController.text.isNotEmpty 
+
+        )
+      return true;
+    else
+      return false;
   }
 
   @override
@@ -70,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: TextField(
-                                    controller: authProvider.email,
+                                    controller: loginController,
                                     decoration: InputDecoration(border: InputBorder.none, hintText: 'Identifiant', icon: Icon(Icons.email_outlined)),
                                   ),
                                 ),
@@ -86,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: TextField(
-                                    controller: authProvider.password,
+                                    controller: psswordController,
                                     obscureText: true,
                                     enableSuggestions: false,
                                     autocorrect: false,
@@ -120,22 +136,32 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: BoxDecoration(color: Colors.indigo),
                                 child: FlatButton(
                                   onPressed: () async {
-                                    // if (!await authProvider.signIn()) {
-                                    //   ScaffoldMessenger.of(context)
-                                    //       .showSnackBar(SnackBar(
-                                    //           content: Text(
-                                    //               "Échec de la connexion")));
-                                    //   return;
-                                    // }
-                                    // authProvider.clearController();
-                                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                    //   return ColorLoader2();
-                                    // }));
+                                          if (isValiData()) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+                              _showLoadingDialog(context);
+                              if (true) {
+                                BackendService.login(
+                                        loginController.text,
+                                        psswordController.text,
+                               )
+                                    .then((value) => {
+                                          print('valuee $value'),
+                                          if (value["code"] == 200)
+                                            {
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                                return  LayoutTemplate();
+                                              }))
+                                            }
+                                          else
+                                            {_showErrorDialog(context, " ")}
+                                        });
+                              }
+                            } else {
+                              _showErrorDialog(context, " ");
+                            }
 
-                                    _showErrorDialog(context, " ");
-                                    callme();
-                                    // locator<NavigationService>()
-                                    //     .globalNavigateTo(LayoutRoute, context);
+                                   // _showErrorDialog(context, " ");
+                                    //callme();
+                           
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 4),
@@ -208,9 +234,10 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
                 )),
             actions: <Widget>[
-              // ignore: deprecated_member_use
+             
               _waiting
                   ? Container()
+                   // ignore: deprecated_member_use
                   : FlatButton(
                       child: Text('Réessayer', style: TextStyle(color: Colors.green, fontWeight: FontWeight.normal, fontSize: 25)),
                       onPressed: () => {Navigator.of(context).pop()},
@@ -219,4 +246,52 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+}
+void _showLoadingDialog(BuildContext context) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        content: Container(
+          height: 500,
+          width: 1000,
+          child: // Load a Lottie file from a remote url
+              Center(
+            child: Container(
+              // margin: EdgeInsets.all(40),
+              //width: 400,
+              child: ColorLoader2(),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+void _showErrorDialog(BuildContext context, String msg) {
+  // flutter defined function
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+          content: Container(
+              height: 200,
+              width: 1000,
+              child: // Load a Lottie file from a remote url
+                  Center(
+                child: Text("Veuillez vérifier les données saisies. $msg",
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
+              )),
+          actions: <Widget>[
+            // ignore: deprecated_member_use
+            FlatButton(
+              child: Text('Réessayer', style: TextStyle(color: Colors.green, fontWeight: FontWeight.normal, fontSize: 25)),
+              onPressed: () => {Navigator.of(context).pop()},
+            ),
+          ]);
+    },
+  );
 }
