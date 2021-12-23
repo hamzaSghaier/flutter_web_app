@@ -41,6 +41,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final GlobalKey<FilePickerRegisterState> _keystatus = GlobalKey();
   final GlobalKey<DropDownOfResponsableTypeState> _keyResponsable = GlobalKey();
   final GlobalKey<DropDownOfTypeAssocState> _keyTypeAssoc = GlobalKey();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    raisonSocialController.text = "Hilalo";
+    villeController.text = "mahdia";
+    gouvernoratController.text = "chebba";
+    matriculeController.text = "CH123456";
+    emailController.text = "chebba@mail.tn";
+    nomController.text = "Hamza";
+    cinController.text = "12345645";
+    prenomController.text = "Sghaier";
+    telephoneController.text = "50145579";
+    super.initState();
+  }
+
   bool isValiData() {
     //print("111 ${_keypublicationJorde.currentState.getPath()}");
 
@@ -52,9 +68,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
             nomController.text.isNotEmpty &&
             cinController.text.isNotEmpty &&
             prenomController.text.isNotEmpty &&
-            telephoneController.text.isNotEmpty
-
-        // _keypublicationJorde.currentState.directoryPath != null &&
+            telephoneController.text.isNotEmpty &&
+            _keypublicationJorde.currentState.getFile() != null &&
+            _keypublicationJorde.currentState.getFile() != null &&
+            _keypublicationJorde.currentState.getFile() != null
         // _keypvElictif.currentState.directoryPath != null &&
         // _keystatus.currentState.directoryPath != null
         )
@@ -373,31 +390,56 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               _showLoadingDialog(context);
                               if (true) {
                                 BackendService.signIn(
-                                  raisonSocialController.text,
-                                  villeController.text,
-                                  gouvernoratController.text,
-                                  matriculeController.text,
-                                  _keyTypeAssoc.currentState.getTypeAssoc(),
-                                  emailController.text,
-                                  nomController.text,
-                                  prenomController.text,
-                                  cinController.text,
-                                  telephoneController.text,
-                                  _keyResponsable.currentState.getResponsable(),
-                                  // _keypublicationJorde.currentState.getPath(),
-                                  // _keypvElictif.currentState.getPath(),
-                                  // _keystatus.currentState.getPath()
-                                ).then((value) => {
-                                      print('valuee $value'),
-                                      if (value["code"] == 200)
-                                        {
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                            return AfterRegistration();
-                                          }))
-                                        }
-                                      else
-                                        {_showErrorDialog(context, " ")}
-                                    });
+                                        raisonSocialController.text,
+                                        villeController.text,
+                                        gouvernoratController.text,
+                                        matriculeController.text,
+                                        _keyTypeAssoc.currentState.getTypeAssoc(),
+                                        emailController.text,
+                                        nomController.text,
+                                        prenomController.text,
+                                        cinController.text,
+                                        telephoneController.text,
+                                        _keyResponsable.currentState.getResponsable(),
+                                        _keypublicationJorde.currentState.getFile()
+                                        // _keypvElictif.currentState.getPath(),
+                                        // _keystatus.currentState.getPath()
+                                        )
+                                        //  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                        //                     return AfterRegistration();
+                                        //                   }))
+                                    .then((value) => {
+                                          print('value of sign in  $value'),
+                                          if (value["code"] == 200)
+                                            {
+                                              BackendService.uploadDocument(_keypublicationJorde.currentState.getFile(), "publicationJorde").then((value) => {
+                                                   print('value of uploadDocument  $value'),
+                                                   if (value["code"] == 200)
+                                                         {
+                                                                BackendService.uploadDocument(_keypvElictif.currentState.getFile(), "pvElictif").then((value) => {
+                                                   print('value of uploadDocument  $value'),
+                                                   if (value["code"] == 200)
+                                                         {
+                                                                     BackendService.uploadDocument(_keystatus.currentState.getFile(), "status").then((value) => {
+                                                   print('value of uploadDocument  $value'),
+                                                   if (value["code"] == 200)
+                                                         {
+                                                                     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                                            return AfterRegistration();
+                                                          }))
+                                                        }
+                                                        else {_showErrorDialog(context, value["body"])}
+                                                  }),
+                                                        }
+                                                        else {_showErrorDialog(context, value["body"])}
+                                                  }),
+                                                        }
+                                                        else {_showErrorDialog(context, value["body"])}
+                                                  }),
+                                            } else{
+                                               _showErrorDialog(context,value["body"])
+                                            }
+                                        });
                               }
                             } else {
                               _showErrorDialog(context, " ");
@@ -518,7 +560,6 @@ class DropDownOfResponsableType extends StatefulWidget {
   @override
   State<DropDownOfResponsableType> createState() => DropDownOfResponsableTypeState();
 }
-
 /// This is the private State class that goes with MyStatefulWidget.
 class DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
   String dropdownValue = 'Trésorerie';

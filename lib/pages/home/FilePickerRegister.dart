@@ -108,15 +108,13 @@
 //   }
 // }
 
-
-
-
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class FilePickerRegister extends StatefulWidget {
   final String name;
@@ -143,6 +141,12 @@ class FilePickerRegisterState extends State<FilePickerRegister> {
     _controller.addListener(() => _extension = _controller.text);
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   List<int> getPath() {
     print(_paths);
     print(_paths.elementAt(0));
@@ -151,9 +155,20 @@ class FilePickerRegisterState extends State<FilePickerRegister> {
     if (_paths != null && _paths.isNotEmpty) {
       print("byyyteeess ${_paths.elementAt(0).bytes.toString()}");
       final List<int> bytesData = Base64Decoder().convert(_paths.elementAt(0).bytes.toString().split(",").last);
-            print("byyytestete ${bytesData}");
+      print("byyytestete ${bytesData}");
 
       return bytesData;
+    } else
+      return null;
+  }
+
+  PlatformFile getFile() {
+    print(_paths);
+    print(_paths.elementAt(0));
+    // Uint8List uploadfile = result.files.single.bytes;
+
+    if (_paths != null && _paths.isNotEmpty) {
+      return _paths.elementAt(0);
     } else
       return null;
   }
@@ -163,9 +178,12 @@ class FilePickerRegisterState extends State<FilePickerRegister> {
     try {
       directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
+        // withReadStream: true,
+        withData: true,
+        withReadStream: true,
         type: _pickingType,
         allowMultiple: _multiPick,
-        allowedExtensions: (_extension?.isNotEmpty ?? false) ? _extension?.replaceAll(' ', '').split(',') : null,
+        // allowedExtensions: (_extension?.isNotEmpty ?? false) ? _extension?.replaceAll(' ', '').split(',') : null,
       ))
           ?.files;
       print("ppppp ${_paths.elementAt(0).toString()}");

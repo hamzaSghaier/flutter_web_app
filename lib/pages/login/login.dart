@@ -27,16 +27,22 @@ class _LoginPageState extends State<LoginPage> {
     });
     setState(() {});
   }
+
   TextEditingController loginController = TextEditingController();
 
   TextEditingController psswordController = TextEditingController();
-    bool isValiData() {
-    
 
-    if (loginController.text.isNotEmpty &&
-            psswordController.text.isNotEmpty 
+  @override
+  void initState() {
+    // TODO: implement initState
+    loginController.text = "hilal@mail.tn";
+    psswordController.text = "123";
 
-        )
+    super.initState();
+  }
+
+  bool isValiData() {
+    if (loginController.text.isNotEmpty && psswordController.text.isNotEmpty)
       return true;
     else
       return false;
@@ -136,32 +142,30 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: BoxDecoration(color: Colors.indigo),
                                 child: FlatButton(
                                   onPressed: () async {
-                                          if (isValiData()) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-                              _showLoadingDialog(context);
-                              if (true) {
-                                BackendService.login(
-                                        loginController.text,
-                                        psswordController.text,
-                               )
-                                    .then((value) => {
-                                          print('valuee $value'),
-                                          if (value["code"] == 200)
-                                            {
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                                return  LayoutTemplate();
-                                              }))
-                                            }
-                                          else
-                                            {_showErrorDialog(context, " ")}
-                                        });
-                              }
-                            } else {
-                              _showErrorDialog(context, " ");
-                            }
+                                    if (isValiData()) {
+                                      _showLoadingDialog(context);
+                                      if (true) {
+                                        BackendService.login(
+                                          loginController.text,
+                                          psswordController.text,
+                                        ).then((value) => {
+                                              print('valuee $value'),
+                                              if (value["code"] == 200)
+                                                {
+                                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                                    return LayoutTemplate();
+                                                  }))
+                                                }
+                                              else
+                                                {_showErrorDialog(context, " ")}
+                                            });
+                                      }
+                                    } else {
+                                      _showErrorDialog(context, " ");
+                                    }
 
-                                   // _showErrorDialog(context, " ");
+                                    // _showErrorDialog(context, " ");
                                     //callme();
-                           
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 4),
@@ -234,10 +238,9 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
                 )),
             actions: <Widget>[
-             
               _waiting
                   ? Container()
-                   // ignore: deprecated_member_use
+                  // ignore: deprecated_member_use
                   : FlatButton(
                       child: Text('Réessayer', style: TextStyle(color: Colors.green, fontWeight: FontWeight.normal, fontSize: 25)),
                       onPressed: () => {Navigator.of(context).pop()},
@@ -247,6 +250,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 void _showLoadingDialog(BuildContext context) {
   // flutter defined function
   showDialog(
@@ -270,6 +274,7 @@ void _showLoadingDialog(BuildContext context) {
     },
   );
 }
+
 void _showErrorDialog(BuildContext context, String msg) {
   // flutter defined function
   showDialog(
