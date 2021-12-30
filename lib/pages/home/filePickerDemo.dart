@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FilePickerDemo extends StatefulWidget {
-
-    final String title;
+  final String title;
   final bool odd;
 
   const FilePickerDemo({Key key, this.title, this.odd}) : super(key: key);
@@ -17,7 +16,7 @@ class FilePickerDemo extends StatefulWidget {
 
 class FilePickerDemoState extends State<FilePickerDemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-   String _fileName;
+  String _fileName;
   List<PlatformFile> _paths;
   String directoryPath;
   String _extension;
@@ -54,8 +53,8 @@ class FilePickerDemoState extends State<FilePickerDemo> {
   }
 
   PlatformFile getFile() {
-    print(_paths);
-    print(_paths.elementAt(0));
+    //print(_paths);
+    // print(_paths.elementAt(0));
     // Uint8List uploadfile = result.files.single.bytes;
 
     if (_paths != null && _paths.isNotEmpty) {
@@ -111,11 +110,11 @@ class FilePickerDemoState extends State<FilePickerDemo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-            margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 10),
       padding: EdgeInsets.only(left: 200, right: 200, top: 20, bottom: 20),
       color: widget.odd ? Colors.blueGrey.withOpacity(0.2) : Colors.blue.withOpacity(0.2),
       child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomText(
@@ -124,8 +123,6 @@ class FilePickerDemoState extends State<FilePickerDemo> {
             weight: FontWeight.bold,
             color: Colors.black,
           ),
-      
-          
           Center(
               child: Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -147,8 +144,7 @@ class FilePickerDemoState extends State<FilePickerDemo> {
                       children: <Widget>[
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary:
-                                  Colors.lightBlue.withOpacity(0.5), // background
+                              primary: Colors.lightBlue.withOpacity(0.5), // background
                               onPrimary: Colors.black,
                               minimumSize: Size(300, 80) // foreground
                               ),
@@ -157,10 +153,7 @@ class FilePickerDemoState extends State<FilePickerDemo> {
                             children: [
                               Text(
                                 " Choisir un fichier",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
+                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                               ),
                               SizedBox(
                                 width: 20,
@@ -177,15 +170,13 @@ class FilePickerDemoState extends State<FilePickerDemo> {
                           width: 30,
                         ),
                         Center(
-                          child: Text(
-                            _paths != null && _paths.isNotEmpty
-                                ? "  fichier : " + _fileName ??
-                                    "..." + "${_paths.elementAt(0)}"
-                                : 'Aucun fichier choisi',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                          child: SizedBox(
+                            width: 400,
+                            child: Text(
+                              _paths != null && _paths.isNotEmpty ? _fileName ?? "..." + "${_paths.elementAt(0)}" : 'Aucun fichier choisi',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
                           ),
                         )
                       ],

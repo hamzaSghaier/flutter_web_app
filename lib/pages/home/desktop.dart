@@ -7,6 +7,7 @@ import 'package:ecommerce_admin_tut/widgets/charts/sales_chart.dart';
 import 'package:ecommerce_admin_tut/widgets/top_buyer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePageDesktop extends StatefulWidget {
   @override
@@ -24,8 +25,38 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
   final rneController = TextEditingController();
   final telephoneController = TextEditingController();
   final cinController = TextEditingController();
-  final nomprenomController = TextEditingController();
-  final faxController = TextEditingController();
+  final nomController = TextEditingController();
+  final prenomController = TextEditingController();
+  final villeController = TextEditingController();
+  String representantLegale;
+  bool finishLoad = false;
+  void initData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    assocNameController.text = prefs.getString("raison_social");
+    matriculeController.text = prefs.getString("matricule_fiscal");
+    rneController.text = prefs.getString("numero_rne");
+    villeController.text = prefs.getString("ville");
+    telephoneController.text = prefs.getString("responsable_tel");
+    mailController.text = prefs.getString("mail");
+    nomController.text = prefs.getString("nom");
+    prenomController.text = prefs.getString("prenom");
+    cinController.text = prefs.getString("cin");
+    representantLegale = prefs.getString("fonction");
+    dateCreationController.text = prefs.getString("created_at");
+    typeAssocController.text = prefs.getString("type");
+    //_representantLegale = "Trésorerie";
+    setState(() {
+      finishLoad = true;
+    });
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    initData();
+    super.initState();
+  }
 
   String _pickingType;
   @override
@@ -79,7 +110,49 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                   SizedBox(
                     height: 10,
                   ),
-                  CustomEditText(rapportNumberController: dateCreationController),
+                  Container(
+                    // padding: EdgeInsets.only(top:10, bottom: 10),
+                    width: 300,
+                    child: Focus(
+                      onFocusChange: (hasFocus) {
+                        if (hasFocus == false) {
+                          //   PlayerProfileService.updateFullName(
+                          //       widget.email,
+                          //       fullNameController.text);
+                        }
+                      },
+                      child: TextField(
+                        onEditingComplete: () => {
+                          // PlayerProfileService.updateFullName(
+                          //     widget.email,
+                          //     fullNameController.text),
+                          FocusScope.of(context).requestFocus(new FocusNode())
+                        },
+                        readOnly: true,
+                        maxLines: 1,
+                        controller: dateCreationController,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1, color: Colors.black),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1, color: Colors.black),
+                          ),
+                          hintStyle: TextStyle(fontSize: 16, color: Colors.white),
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  // CustomEditText(rapportNumberController: dateCreationController),
                 ],
               ),
               Column(
@@ -120,6 +193,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                   //           child: const Text('Type 3'),
                   //           value: "FileType.video",
                   //         ),
+
                   //         DropdownMenuItem(
                   //           child: const Text('Type 4'),
                   //           value: "FileType.media",
@@ -183,7 +257,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                   SizedBox(
                     height: 10,
                   ),
-                  CustomEditText(rapportNumberController: rapportNumberController),
+                  CustomEditText(rapportNumberController: mailController),
                 ],
               ),
               Column(
@@ -203,13 +277,13 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Fax Association  ",
+                    "Ville  ",
                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  CustomEditText(rapportNumberController: faxController),
+                  CustomEditText(rapportNumberController: villeController),
                 ],
               ),
             ],
@@ -231,7 +305,11 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
               SizedBox(
                 width: 50,
               ),
-              DropDownOfResponsableType()
+              finishLoad
+                  ? DropDownOfResponsableType(
+                      initValue: representantLegale,
+                    )
+                  : Container()
             ],
           ),
           SizedBox(
@@ -244,13 +322,26 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nom et prénom  ",
+                    "Nom  ",
                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  CustomEditText(rapportNumberController: nomprenomController),
+                  CustomEditText(rapportNumberController: nomController),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Prénom  ",
+                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomEditText(rapportNumberController: prenomController),
                 ],
               ),
               Column(
@@ -264,19 +355,6 @@ class _HomePageDesktopState extends State<HomePageDesktop> {
                     height: 10,
                   ),
                   CustomEditText(rapportNumberController: cinController),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Email  ",
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomEditText(rapportNumberController: mailController),
                 ],
               ),
               Column(
@@ -378,7 +456,8 @@ class RowUploadFile extends StatelessWidget {
 }
 
 class DropDownOfResponsableType extends StatefulWidget {
-  const DropDownOfResponsableType({Key key}) : super(key: key);
+  final String initValue;
+  const DropDownOfResponsableType({Key key, @required this.initValue}) : super(key: key);
 
   @override
   State<DropDownOfResponsableType> createState() => _DropDownOfResponsableTypeState();
@@ -386,7 +465,13 @@ class DropDownOfResponsableType extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class _DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
-  String dropdownValue = 'Trésorerie';
+  String dropdownValue;
+  @override
+  void initState() {
+    // TODO: implement initState
+    dropdownValue = widget.initValue;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -412,7 +497,8 @@ class _DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
         items: <String>['Trésorerie', 'Président', 'Secrétaire'].map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Container(margin: EdgeInsets.all(10), child: Text(value, style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold))),
+            child: Container(
+                margin: EdgeInsets.all(10), child: Text(value, style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold))),
           );
         }).toList(),
       ),

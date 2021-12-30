@@ -45,15 +45,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void initState() {
     // TODO: implement initState
-    raisonSocialController.text = "Hilalo";
-    villeController.text = "mahdia";
-    gouvernoratController.text = "chebba";
-    matriculeController.text = "CH123456";
-    emailController.text = "chebba@mail.tn";
-    nomController.text = "Hamza";
-    cinController.text = "12345645";
-    prenomController.text = "Sghaier";
-    telephoneController.text = "50145579";
+    // raisonSocialController.text = "Hilalo";
+    // villeController.text = "mahdia";
+    // gouvernoratController.text = "chebba";
+    // matriculeController.text = "CH123456";
+    // emailController.text = "chebba@mail.tn";
+    // nomController.text = "Hamza";
+    // cinController.text = "12345645";
+    // prenomController.text = "Sghaier";
+    // telephoneController.text = "50145579";
     super.initState();
   }
 

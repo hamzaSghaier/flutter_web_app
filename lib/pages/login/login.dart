@@ -35,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     // TODO: implement initState
-    loginController.text = "hilal@mail.tn";
-    psswordController.text = "123";
+    loginController.text = "sghhamza10@gmail.com";
+    psswordController.text = "qyIJgq1s";
 
     super.initState();
   }

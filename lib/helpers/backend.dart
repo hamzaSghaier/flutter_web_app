@@ -8,7 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 
-const HOST = "http://137.74.219.115:8888/";
+//const HOST = "http://137.74.219.115:8888/";
+const HOST = "https://www.digi-8.tn/api/";
 const AUTH_TOKEN = "e74eb221af1245feaaffb4dd88081637";
 
 class BackendService {
@@ -56,14 +57,24 @@ class BackendService {
       final jsonbody = json.decode(body);
       if (jsonbody["results"] != null) {
         if (jsonbody["results"]["data"] != null) if (jsonbody["results"]["data"]["code"] != null)
-          prefs.setString("object", jsonbody["results"]["data"]["code"]);
+        prefs.setString("object", jsonbody["results"]["data"]["code"]);
         prefs.setString("code", jsonbody["results"]["data"]["code"]);
         prefs.setString("raison_social", jsonbody["results"]["data"]["raison_social"]);
         prefs.setString("matricule_fiscal", jsonbody["results"]["data"]["matricule_fiscal"]);
         prefs.setString("adresse", jsonbody["results"]["data"]["adresse"]);
         prefs.setString("ville", jsonbody["results"]["data"]["ville"]);
         prefs.setString("tel", jsonbody["results"]["data"]["tel"]);
+        prefs.setString("responsable_tel", jsonbody["results"]["data"]["responsable_tel"]);
         prefs.setString("mail", jsonbody["results"]["data"]["mail"]);
+        prefs.setString("etat", jsonbody["results"]["data"]["etat"]);
+        prefs.setString("type", jsonbody["results"]["data"]["type"]);
+        prefs.setString("nom", jsonbody["results"]["data"]["nom"]);
+        prefs.setString("prenom", jsonbody["results"]["data"]["prenom"]);
+        prefs.setString("cin", jsonbody["results"]["data"]["cin"]);
+        prefs.setString("numero_rne", jsonbody["results"]["data"]["numero_rne"]);
+        prefs.setString("matricule_cnss", jsonbody["results"]["data"]["matricule_cnss"]);
+        prefs.setString("created_at", jsonbody["results"]["data"]["created_at"]);
+        prefs.setString("fonction", jsonbody["results"]["data"]["fonction"]);
       }
 
       // print(await response.stream.bytesToString());
