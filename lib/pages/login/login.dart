@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                                       _showErrorDialog(context, " ");
                                     } else {
                                       _showLoadingDialog(context);
-                                      if (true) {
+                                  
                                         try {
                                           BackendService.login(
                                             loginController.text,
@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                         } catch (e) {
                                           _showErrorDialog(context, " ");
                                         }
-                                      }
+                                      
                                     }
 
                                     // _showErrorDialog(context, " ");
