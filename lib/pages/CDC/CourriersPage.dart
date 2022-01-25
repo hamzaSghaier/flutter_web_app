@@ -65,100 +65,13 @@ class _MailtoDemoState extends State<MailtoDemo> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading : false ,
         backgroundColor: white,
         middle: Text(
           'Messageries',
         ),
       ),
-      child: ListView(
-        children: <Widget>[
-          EmailsContainer(
-            onChanged: (v) => to = v,
-            icon: CupertinoIcons.person_solid,
-            title: 'À',
-            placeholder: 'à',
-          ),
-          EmailsContainer(
-            onChanged: (v) => cc = v,
-            icon: CupertinoIcons.group_solid,
-            title: 'Cc',
-            placeholder: 'Ajouter des destinataires en Cc',
-          ),
-          EmailsContainer(
-            onChanged: (v) => bcc = v,
-            icon: CupertinoIcons.group,
-            title: 'Cci',
-            placeholder: 'Ajouter des destinataires en Cci',
-          ),
-          SubjectTextField(
-            onChanged: (v) => subject = v,
-          ),
-          BodyTextField(
-            onChanged: (v) => body = v,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 32,
-              horizontal: 80,
-            ),
-            child: CupertinoButton.filled(
-              child: Text('Ouvrir le client de messageries'),
-              onPressed: () async {
-                final url = Mailto(
-                  to: to,
-                  cc: cc,
-                  bcc: bcc,
-                  subject: subject,
-                  body: body,
-                ).toString();
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  showCupertinoDialog(
-                    context: context,
-                    builder: MailClientOpenErrorDialog(url: url).build,
-                  );
-                }
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 80,
-            ),
-            child: CupertinoButton(
-              color: Color(0xFF8E44AD),
-              child: Text('Nouveau message'),
-              onPressed: () async {
-                final url = Mailto(
-                  to: [
-                    'example@example.com',
-                    'ejemplo@ejemplo.com',
-                  ],
-                  cc: [
-                    'percentage%100@example.com',
-                    'QuestionMark?address@example.com',
-                  ],
-                  bcc: [
-                    'Mike&family@example.org',
-                  ],
-                  subject: 'test test example "test"! ☕️ 2+2=4 #',
-                  body:
-                      'Hello this if the first line!\n\nNew line with some special characters őúóüűáéèßáñ\nEmoji: 👍',
-                ).toString();
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  showCupertinoDialog(
-                    context: context,
-                    builder: MailClientOpenErrorDialog(url: url).build,
-                  );
-                }
-              },
-            ),
-          ),
-        ],
-      ),
+      child: Container(),
     );
   }
 }

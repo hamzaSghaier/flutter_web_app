@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ecommerce_admin_tut/helpers/backend.dart';
+import 'package:ecommerce_admin_tut/pages/CDC/configuration.dart';
 import 'package:ecommerce_admin_tut/pages/home/filePickerDemo.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/page_header.dart';
@@ -12,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'dart:typed_data';
-
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -67,6 +67,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
   final GlobalKey<FilePickerDemoState> _keymoral_analyse = new GlobalKey();
   final GlobalKey<FilePickerDemoState> _keymoral_note = new GlobalKey();
   final GlobalKey<FilePickerDemoState> _keymoral_approbation = new GlobalKey();
+  final GlobalKey<FilePickerDemoState> _keybalance = new GlobalKey();
 
   bool isValiData() {
     if (_keyfinance.currentState.getFile() == null || _keymoral_analyse.currentState.getFile() == null) return false;
@@ -98,7 +99,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                       minimumSize: Size(300, 80) // foreground
                       ),
                   onPressed: () async {
-                    var url = "$HOST/cdc/templates/etat_financier";
+                    var url = Configuration.urlEtatFinanciere;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -129,7 +130,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                       minimumSize: Size(300, 80) // foreground
                       ),
                   onPressed: () async {
-                    var url = "$HOST/cdc/templates/eclairecissement";
+                    var url = Configuration.urlEclairsissement;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -160,7 +161,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                       minimumSize: Size(300, 80) // foreground
                       ),
                   onPressed: () async {
-                    var url = "$HOST/cdc/templates/subvontion";
+                    var url = Configuration.urlSubvension;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -191,7 +192,7 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                       minimumSize: Size(300, 80) // foreground
                       ),
                   onPressed: () async {
-                    var url = "$HOST/cdc/templates/etat_financier";
+                    var url = Configuration.urlBalance;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -284,6 +285,11 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                           FilePickerDemo(
                             key: _keyfinance,
                             title: "Etats financiers",
+                            odd: true,
+                          ),
+                          FilePickerDemo(
+                            key: _keybalance,
+                            title: "Balance",
                             odd: true,
                           ),
                           FilePickerDemo(
@@ -395,6 +401,9 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                                             if (_keyfinance.currentState.getFile() != null)
                                               await BackendService.uploadDocumentWithAlias(
                                                   _keyfinance.currentState.getFile(), "finance", random_alias);
+                                            if (_keybalance.currentState.getFile() != null)
+                                              await BackendService.uploadDocumentWithAlias(
+                                                  _keybalance.currentState.getFile(), "balance", random_alias);
 
                                             if (_keyclarification.currentState.getFile() != null)
                                               await BackendService.uploadDocumentWithAlias(
@@ -532,9 +541,24 @@ void _showErrorDialog(BuildContext context, String msg) {
               height: 200,
               width: 1000,
               child: // Load a Lottie file from a remote url
-                  Center(
-                child: Text("Veuillez vérifier l'insertion des documents. $msg",
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
+                  Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Veuillez vérifier l'insertion des documents.",
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
+                  Text(" \n  *Documents obligatoires : états financiers et rapport d'analyse. ",
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 16)),
+                  msg != null
+                      ? msg.trim().length > 0
+                          ? Text("Erreur d'envoi : $msg", style: TextStyle(color: Colors.red, fontWeight: FontWeight.normal, fontSize: 12))
+                          : SizedBox(
+                              height: 10,
+                            )
+                      : SizedBox(
+                          height: 10,
+                        ),
+                ],
               )),
           actions: <Widget>[
             // ignore: deprecated_member_use
@@ -883,7 +907,7 @@ class DechargeWidget extends StatelessWidget {
                 height: 30,
               ),
               Text("Vous avez envoyé avec succès le rapport financier et moral le  $convertedDate",
-                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 22)),
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 18)),
               SizedBox(
                 height: 20,
               ),

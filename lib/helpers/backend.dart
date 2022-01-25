@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 
 //const HOST = "http://137.74.219.115:8888/";
 const HOST = "https://www.digi-8.tn/api/";
+const HOST2 = "https://www.digi-8.tn/api";
 const AUTH_TOKEN = "e74eb221af1245feaaffb4dd88081637";
 
 class BackendService {
@@ -36,6 +37,23 @@ class BackendService {
     } else {
       return {"code": response.statusCode, "body": response.reasonPhrase};
     }
+  } 
+   static Future<dynamic> rapports() async {
+           SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var request = http.MultipartRequest('GET', Uri.parse(HOST + 'association/'+ prefs.getString('object') +'/rapports'));
+   // request.fields.addAll({'token': AUTH_TOKEN});
+
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+     // SharedPreferences prefs = await SharedPreferences.getInstance();
+      final body = await response.stream.bytesToString();
+      final jsonbody = json.decode(body);
+  
+      return {"code": response.statusCode, "body": jsonbody};
+    } else {
+      return {"code": response.statusCode, "body": response.reasonPhrase};
+    }
   }
 
   static Future<dynamic> login(String login, String password) async {
@@ -57,7 +75,7 @@ class BackendService {
       final jsonbody = json.decode(body);
       if (jsonbody["results"] != null) {
         if (jsonbody["results"]["data"] != null) if (jsonbody["results"]["data"]["code"] != null)
-        prefs.setString("object", jsonbody["results"]["data"]["code"]);
+          prefs.setString("object", jsonbody["results"]["data"]["code"]);
         prefs.setString("code", jsonbody["results"]["data"]["code"]);
         prefs.setString("raison_social", jsonbody["results"]["data"]["raison_social"]);
         prefs.setString("matricule_fiscal", jsonbody["results"]["data"]["matricule_fiscal"]);
@@ -78,6 +96,7 @@ class BackendService {
       }
 
       // print(await response.stream.bytesToString());
+      print("response.statusCode${response.statusCode}");
 
       return {"code": response.statusCode, "body": jsonbody};
     } else {
@@ -112,7 +131,7 @@ class BackendService {
       var headers = {'Authorization': prefs.getString('jwt'), 'Content-Type': 'application/json'};
       var request = http.Request('POST', Uri.parse(HOST + 'association/signin'));
       request.body = json.encode({
-        "raisonSocial": raisonSocial, 
+        "raisonSocial": raisonSocial,
         "ville": ville,
         "gouvernorat": gouvernorat,
         "matricule_fiscal": matriculeFiscal,
@@ -255,7 +274,9 @@ class BackendService {
       return {"code": 503, "body": "Error uploadDocument :  ${e.toString()}"};
     }
   }
-  static Future<dynamic> uploadDocumentWithAlias(PlatformFile selectedFile, String name,String alias) async {
+
+  static Future<dynamic> uploadDocumentWithAlias(PlatformFile selectedFile, String name, String alias) async {
+    print("Start uploading ... ${selectedFile.name}... name :  $name ... alias : $alias");
     convertFileToCast(data) {
       List<int> list = new List.from(data);
       return list;
@@ -320,8 +341,9 @@ class BackendService {
         return {"code": response.statusCode, "body": body};
       }
     } catch (e) {
-      print(e.toString());
-      return {"code": 503, "body": "Error uploadDocument :  ${e.toString()}"};
+      throw ("Error upload document :  ${e.toString()}");
+      //print(e.toString());
+      // return {"code": 503, "body": "Error uploadDocument :  ${e.toString()}"};
     }
   }
 }

@@ -36,6 +36,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   TextEditingController prenomController = TextEditingController();
   TextEditingController cinController = TextEditingController();
   TextEditingController telephoneController = TextEditingController();
+  TextEditingController otherTypeController = TextEditingController();
   final GlobalKey<FilePickerRegisterState> _keypublicationJorde = GlobalKey();
   final GlobalKey<FilePickerRegisterState> _keypvElictif = GlobalKey();
   final GlobalKey<FilePickerRegisterState> _keystatus = GlobalKey();
@@ -207,8 +208,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       DropDownOfTypeAssoc(
                         key: _keyTypeAssoc,
-                      )
+                      ),
                     ]),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.grey[200]),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: TextField(
+                            controller: otherTypeController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'autre',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     // Padding(
                     //   padding: const EdgeInsets.symmetric(horizontal: 20),
                     //   child: Container(
@@ -394,7 +411,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                         villeController.text,
                                         gouvernoratController.text,
                                         matriculeController.text,
-                                        _keyTypeAssoc.currentState.getTypeAssoc(),
+                                      otherTypeController.text.isEmpty?   _keyTypeAssoc.currentState.getTypeAssoc():otherTypeController.text ,
                                         emailController.text,
                                         nomController.text,
                                         prenomController.text,
@@ -405,40 +422,47 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                         // _keypvElictif.currentState.getPath(),
                                         // _keystatus.currentState.getPath()
                                         )
-                                        //  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                        //                     return AfterRegistration();
-                                        //                   }))
+                                    //  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                    //                     return AfterRegistration();
+                                    //                   }))
                                     .then((value) => {
                                           print('value of sign in  $value'),
                                           if (value["code"] == 200)
                                             {
-                                              BackendService.uploadDocument(_keypublicationJorde.currentState.getFile(), "publicationJorde").then((value) => {
-                                                   print('value of uploadDocument  $value'),
-                                                   if (value["code"] == 200)
-                                                         {
-                                                                BackendService.uploadDocument(_keypvElictif.currentState.getFile(), "pvElictif").then((value) => {
-                                                   print('value of uploadDocument  $value'),
-                                                   if (value["code"] == 200)
-                                                         {
-                                                                     BackendService.uploadDocument(_keystatus.currentState.getFile(), "status").then((value) => {
-                                                   print('value of uploadDocument  $value'),
-                                                   if (value["code"] == 200)
-                                                         {
-                                                                     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                                            return AfterRegistration();
-                                                          }))
-                                                        }
-                                                        else {_showErrorDialog(context, value["body"])}
-                                                  }),
-                                                        }
-                                                        else {_showErrorDialog(context, value["body"])}
-                                                  }),
-                                                        }
-                                                        else {_showErrorDialog(context, value["body"])}
-                                                  }),
-                                            } else{
-                                               _showErrorDialog(context,value["body"])
+                                              BackendService.uploadDocument(_keypublicationJorde.currentState.getFile(), "publicationJorde")
+                                                  .then((value) => {
+                                                        print('value of uploadDocument  $value'),
+                                                        if (value["code"] == 200)
+                                                          {
+                                                            BackendService.uploadDocument(_keypvElictif.currentState.getFile(), "pvElictif")
+                                                                .then((value) => {
+                                                                      print('value of uploadDocument  $value'),
+                                                                      if (value["code"] == 200)
+                                                                        {
+                                                                          BackendService.uploadDocument(_keystatus.currentState.getFile(), "status")
+                                                                              .then((value) => {
+                                                                                    print('value of uploadDocument  $value'),
+                                                                                    if (value["code"] == 200)
+                                                                                      {
+                                                                                        Navigator.of(context)
+                                                                                            .push(MaterialPageRoute(builder: (context) {
+                                                                                          return AfterRegistration();
+                                                                                        }))
+                                                                                      }
+                                                                                    else
+                                                                                      {_showErrorDialog(context, value["body"])}
+                                                                                  }),
+                                                                        }
+                                                                      else
+                                                                        {_showErrorDialog(context, value["body"])}
+                                                                    }),
+                                                          }
+                                                        else
+                                                          {_showErrorDialog(context, value["body"])}
+                                                      }),
                                             }
+                                          else
+                                            {_showErrorDialog(context, value["body"])}
                                         });
                               }
                             } else {
@@ -507,7 +531,7 @@ class DropDownOfTypeAssoc extends StatefulWidget {
 
 /// This is the private State class that goes with MyStatefulWidget.
 class DropDownOfTypeAssocState extends State<DropDownOfTypeAssoc> {
-  String dropdownValue = 'Citoyennité et gouvernance';
+  String dropdownValue = 'Citoyenneté et gouvernance';
 
   String getTypeAssoc() {
     return dropdownValue;
@@ -539,7 +563,7 @@ class DropDownOfTypeAssocState extends State<DropDownOfTypeAssoc> {
           'Aide aux handicapés',
           'Aide humanitaire',
           "Arts / Culture",
-          "Citoyennité et gouvernance",
+          "Citoyenneté et gouvernance",
           "Droit de l\'enfant",
           "Droit des femmes"
         ].map<DropdownMenuItem<String>>((String value) {
@@ -560,6 +584,7 @@ class DropDownOfResponsableType extends StatefulWidget {
   @override
   State<DropDownOfResponsableType> createState() => DropDownOfResponsableTypeState();
 }
+
 /// This is the private State class that goes with MyStatefulWidget.
 class DropDownOfResponsableTypeState extends State<DropDownOfResponsableType> {
   String dropdownValue = 'Trésorerie';

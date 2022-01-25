@@ -35,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     // TODO: implement initState
-    loginController.text = "sghhamza10@gmail.com";
-    psswordController.text = "qyIJgq1s";
+    // loginController.text = "sghhamza10@gmail.com";
+    // psswordController.text = "umCATtwk";
 
     super.initState();
   }
@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: TextField(
                                     controller: loginController,
-                                    decoration: InputDecoration(border: InputBorder.none, hintText: 'Identifiant', icon: Icon(Icons.email_outlined)),
+                                    decoration: InputDecoration(border: InputBorder.none, hintText: 'E-mail', icon: Icon(Icons.email_outlined)),
                                   ),
                                 ),
                               ),
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   CustomText(
-                                    text: "Mot de passe oublié?",
+                                    text: " ",
                                     size: 16,
                                     color: Colors.grey,
                                   ),
@@ -142,26 +142,30 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: BoxDecoration(color: Colors.indigo),
                                 child: FlatButton(
                                   onPressed: () async {
-                                    if (isValiData()) {
+                                    if (loginController.text.isEmpty && psswordController.text.isEmpty) {
+                                      _showErrorDialog(context, " ");
+                                    } else {
                                       _showLoadingDialog(context);
                                       if (true) {
-                                        BackendService.login(
-                                          loginController.text,
-                                          psswordController.text,
-                                        ).then((value) => {
-                                              print('valuee $value'),
-                                              if (value["code"] == 200)
-                                                {
-                                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                                    return LayoutTemplate();
-                                                  }))
-                                                }
-                                              else
-                                                {_showErrorDialog(context, " ")}
-                                            });
+                                        try {
+                                          BackendService.login(
+                                            loginController.text,
+                                            psswordController.text,
+                                          ).then((value) => {
+                                                print('valuee $value'),
+                                                if (value["code"] == 200)
+                                                  {
+                                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                                      return LayoutTemplate();
+                                                    }))
+                                                  }
+                                                else
+                                                  {_showErrorDialog(context, " ")}
+                                              });
+                                        } catch (e) {
+                                          _showErrorDialog(context, " ");
+                                        }
                                       }
-                                    } else {
-                                      _showErrorDialog(context, " ");
                                     }
 
                                     // _showErrorDialog(context, " ");
@@ -234,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                   child: _waiting
                       ? ColorLoader2()
-                      : Text("Veuillez vérifier les données saisies. $msg",
+                      : Text("Veuillez vérifier les données saisies.",
                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 25)),
                 )),
             actions: <Widget>[

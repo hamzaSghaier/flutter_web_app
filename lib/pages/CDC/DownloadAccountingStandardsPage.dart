@@ -1,8 +1,10 @@
+import 'package:ecommerce_admin_tut/pages/CDC/configuration.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/page_header.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class DownloadAccountingStandardsPage extends StatelessWidget {
   @override
@@ -64,11 +66,21 @@ class DownloadCardB extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               SizedBox(height: 10),
-              CustomText(
-                text: "Balance ",
-                size: 30,
-                weight: FontWeight.bold,
-                color: Colors.white,
+              GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlBalance;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "Balance ",
+                  size: 30,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(height: 10),
             ],
@@ -104,28 +116,58 @@ class DownloadCard41 extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               CustomText(
-                text: "Norme comptable 41 ",
+                text: "Norme comptable 40 ",
                 size: 30,
                 weight: FontWeight.bold,
                 color: Colors.white,
               ),
-              CustomText(
-                text: "-Etats financiers ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                         GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlEtatFinanciere;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Etats financiers ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-              CustomText(
-                text: "-Tableau d'éclaircissement ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                         GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlEclairsissement;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Tableau d'éclaircissement ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-              CustomText(
-                text: "-Tableau d'utilisation des subventions ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                         GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlSubvension;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Tableau d'utilisation des subventions ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -165,23 +207,53 @@ class DownloadCard32 extends StatelessWidget {
                 weight: FontWeight.bold,
                 color: Colors.white,
               ),
-              CustomText(
-                text: "-Etats financier ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                        GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlEtatFinanciere;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Etats financier ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-              CustomText(
-                text: "-Tableaux d'éclairsissement ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                        GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlEclairsissement;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Tableaux d'éclairsissement ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-              CustomText(
-                text: "-Tableau d'utilisation des subventions ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                         GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlSubvension;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Tableau d'utilisation des subventions ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -226,14 +298,24 @@ class DownloadCard45 extends StatelessWidget {
                 weight: FontWeight.bold,
                 color: Colors.white,
               ),
-              RichText(
-                text: new TextSpan(
-                  children: [
-                    new TextSpan(
-                      text: "-Etats financier ",
-                      style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                        GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlEtatFinanciere;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: RichText(
+                  text: new TextSpan(
+                    children: [
+                      new TextSpan(
+                        text: "-Etats financier ",
+                        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -250,17 +332,37 @@ class DownloadCard45 extends StatelessWidget {
               //   weight: FontWeight.bold,
               //   color: Colors.white,
               // ),
-              CustomText(
-                text: "-Tableaux d'éclairsissement",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                         GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlEclairsissement;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Tableaux d'éclairsissement",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
-              CustomText(
-                text: "-Tableau d'utilisation des subventions ",
-                size: 25,
-                weight: FontWeight.bold,
-                color: Colors.white,
+                         GestureDetector(
+                onTap:  () async {
+                    var url = Configuration.urlSubvension;
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                child: CustomText(
+                  text: "-Tableau d'utilisation des subventions ",
+                  size: 25,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
