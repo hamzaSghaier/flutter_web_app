@@ -9,8 +9,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 
 //const HOST = "http://137.74.219.115:8888/";
-const HOST = "https://www.digi-8.tn/api/";
-const HOST2 = "https://www.digi-8.tn/api";
+const HOST = "http://h4t.courdescomptes.nat.tn:8080/";
+const HOST2 = "http://h4t.courdescomptes.nat.tn:8080";
 const AUTH_TOKEN = "e74eb221af1245feaaffb4dd88081637";
 
 class BackendService {
@@ -37,19 +37,20 @@ class BackendService {
     } else {
       return {"code": response.statusCode, "body": response.reasonPhrase};
     }
-  } 
-   static Future<dynamic> rapports() async {
-           SharedPreferences prefs = await SharedPreferences.getInstance();
+  }
 
-    var request = http.MultipartRequest('GET', Uri.parse(HOST + 'association/'+ prefs.getString('object') +'/rapports'));
-   // request.fields.addAll({'token': AUTH_TOKEN});
+  static Future<dynamic> rapports() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var request = http.MultipartRequest('GET', Uri.parse(HOST + 'association/' + prefs.getString('object') + '/rapports'));
+    // request.fields.addAll({'token': AUTH_TOKEN});
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-     // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
       final body = await response.stream.bytesToString();
       final jsonbody = json.decode(body);
-  
+
       return {"code": response.statusCode, "body": jsonbody};
     } else {
       return {"code": response.statusCode, "body": response.reasonPhrase};
@@ -216,6 +217,10 @@ class BackendService {
       var now = DateTime.now();
       var headers = {'enctype': 'multipart/form-data', 'Authorization': prefs.getString('jwt')};
       var url = HOST + 'association/document/' + prefs.getString('object') + '/' + name + '/' + '${now.year}';
+     
+     
+    // balance/upload/6291b9a0-7d8a-4369-81b0-1e3d744fc68d/2022
+
       // var request = http.MultipartRequest('POST', Uri.parse(url));
       // request.files.add(await http.MultipartFile.fromBytes('file', selectedFile, contentType: new MediaType('application', 'octet-stream'), filename: name));
 
@@ -272,6 +277,78 @@ class BackendService {
     } catch (e) {
       print(e.toString());
       return {"code": 503, "body": "Error uploadDocument :  ${e.toString()}"};
+    }
+  }
+
+  static Future<dynamic> uploadBalance(PlatformFile selectedFile) async {
+    print("Start uploading ... ${selectedFile.name}");
+    convertFileToCast(data) {
+      List<int> list = new List.from(data);
+      return list;
+    }
+
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var now = DateTime.now();
+      var headers = {'enctype': 'multipart/form-data', 'Authorization': prefs.getString('jwt')};
+      var url = HOST + '/balance/upload/' + prefs.getString('object') + '${now.year}';
+      // var request = http.MultipartRequest('POST', Uri.parse(url));
+      // request.files.add(await http.MultipartFile.fromBytes('file', selectedFile, contentType: new MediaType('application', 'octet-stream'), filename: name));
+
+      // request.files.add(http.MultipartFile.fromBytes(name, await selectedFile.readStream.first));
+      var stream = await http.ByteStream(selectedFile.readStream).asBroadcastStream();
+      var formData = FormData.fromMap({
+        'file': http.MultipartFile(
+          'file',
+          stream,
+          selectedFile.size,
+          filename: "file",
+        ),
+      });
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.files.add(
+        http.MultipartFile(
+          'file',
+          stream,
+          selectedFile.size,
+          filename: "file",
+        ),
+      );
+      final httpClient = http.Client();
+      final response = await httpClient.send(request);
+
+      //  var dio = Dio();
+      // var response = await dio.post(url, data: formData );
+      // request.files.add(await http.MultipartFile.fromBytes("file", convertFileToCast(selectedFile.bytes)));
+      // request.headers.addAll(headers);
+      // http.StreamedResponse response = await request.send();
+      // var response = await request.send();
+
+      print("I m passeedd");
+      final body = await response.stream.transform(utf8.decoder).join();
+
+      if (response.statusCode == 200) {
+        // final body = await response.;
+
+        print(body);
+        final jsonbody = json.decode(body);
+        if (jsonbody["results"] != null) {
+          if (jsonbody["results"]["data"] != null) if (jsonbody["results"]["data"]["object"] != null)
+            // prefs.setString("object", jsonbody["results"]["data"]["object"]);
+            print(jsonbody["results"]["data"]["object"]);
+        }
+
+        // print(await response.stream.bytesToString());
+
+        return {"code": response.statusCode, "body": jsonbody};
+      } else {
+        print(body);
+        return {"code": response.statusCode, "body": body};
+      }
+    } catch (e) {
+      throw ("Error upload document :  ${e.toString()}");
+      //print(e.toString());
+      // return {"code": 503, "body": "Error uploadDocument :  ${e.toString()}"};
     }
   }
 

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Digi 8',
+      title: ' ',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
@@ -49,7 +49,7 @@ class _AppPagesControllerState extends State<AppPagesController> {
   @override
   Widget build(BuildContext context) {
     //AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    // return LayoutTemplate();
+   // return LayoutTemplate();
     //return LoginPage();
 
     return FutureBuilder<dynamic>(
@@ -61,9 +61,9 @@ class _AppPagesControllerState extends State<AppPagesController> {
             case ConnectionState.waiting:
               return ColorLoader2();
             case ConnectionState.done:
-              // print("user Exist code ${snapshot.data.data["code"]}");
+             // print("user Exist code ${snapshot.data.data["code"]}");
               if (snapshot.hasData) if (snapshot.data["code"] == 200) {
-                //  return Text("snapshot.data ${snapshot.data}");
+                //return Text("snapshot.data ${snapshot.data}");
                 return LoginPage();
                 // return FutureBuilder<Object>(
                 //     future: BackendService.getJwt(),
@@ -86,7 +86,6 @@ class _AppPagesControllerState extends State<AppPagesController> {
               else {
                 return FailedWs(() => setState(() => {}));
               }
-
               break;
             default:
               return ColorLoader2();

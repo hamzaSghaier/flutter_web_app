@@ -3,7 +3,6 @@ import 'package:ecommerce_admin_tut/helpers/enumerators.dart';
 import 'package:ecommerce_admin_tut/helpers/loaders.dart';
 import 'package:ecommerce_admin_tut/pages/CDC/OnlineDepositePage.dart';
 import 'package:ecommerce_admin_tut/pages/CDC/association_entity.dart';
-import 'package:ecommerce_admin_tut/pages/CDC/backend.dart';
 import 'package:ecommerce_admin_tut/pages/home/AfterRegister.dart';
 import 'package:ecommerce_admin_tut/pages/home/FilePickerRegister.dart';
 import 'package:ecommerce_admin_tut/pages/login/login.dart';
@@ -42,6 +41,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final GlobalKey<FilePickerRegisterState> _keystatus = GlobalKey();
   final GlobalKey<DropDownOfResponsableTypeState> _keyResponsable = GlobalKey();
   final GlobalKey<DropDownOfTypeAssocState> _keyTypeAssoc = GlobalKey();
+  final GlobalKey<FilePickerRegisterState> _keyCinRecto = GlobalKey();
+  final GlobalKey<FilePickerRegisterState> _keyCinVerso = GlobalKey();
 
   @override
   void initState() {
@@ -72,8 +73,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
             telephoneController.text.isNotEmpty &&
             _keypublicationJorde.currentState.getFile() != null &&
             _keypublicationJorde.currentState.getFile() != null &&
-            _keypublicationJorde.currentState.getFile() != null
-        // _keypvElictif.currentState.directoryPath != null &&
+            _keypublicationJorde.currentState.getFile() != null &&
+            _keyCinRecto.currentState.getFile() != null &&
+            _keyCinVerso.currentState.getFile() != null
         // _keystatus.currentState.directoryPath != null
         )
       return true;
@@ -392,6 +394,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(
                       height: 20,
                     ),
+                    FilePickerRegister(
+                      name: "Carte d'identité (Recto) ",
+                      key: _keyCinRecto,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    FilePickerRegister(
+                      name: "Carte d'identité (Verso) ",
+                      key: _keyCinVerso,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Container(
@@ -411,7 +427,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                         villeController.text,
                                         gouvernoratController.text,
                                         matriculeController.text,
-                                      otherTypeController.text.isEmpty?   _keyTypeAssoc.currentState.getTypeAssoc():otherTypeController.text ,
+                                        otherTypeController.text.isEmpty ? _keyTypeAssoc.currentState.getTypeAssoc() : otherTypeController.text,
                                         emailController.text,
                                         nomController.text,
                                         prenomController.text,
@@ -444,10 +460,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                                                     print('value of uploadDocument  $value'),
                                                                                     if (value["code"] == 200)
                                                                                       {
-                                                                                        Navigator.of(context)
-                                                                                            .push(MaterialPageRoute(builder: (context) {
-                                                                                          return AfterRegistration();
-                                                                                        }))
+                                                                                        BackendService.uploadDocument(
+                                                                                                _keyCinRecto.currentState.getFile(), "cin_recto")
+                                                                                            .then((value) => {
+                                                                                                  print('value of uploadDocument  $value'),
+                                                                                                  if (value["code"] == 200)
+                                                                                                    {
+                                                                                                      BackendService.uploadDocument(
+                                                                                                              _keyCinVerso.currentState.getFile(),
+                                                                                                              "cin_verso")
+                                                                                                          .then((value) => {
+                                                                                                                print(
+                                                                                                                    'value of uploadDocument  $value'),
+                                                                                                                if (value["code"] == 200)
+                                                                                                                  {
+                                                                                                                    Navigator.of(context).push(
+                                                                                                                        MaterialPageRoute(
+                                                                                                                            builder: (context) {
+                                                                                                                      return AfterRegistration();
+                                                                                                                    }))
+                                                                                                                  }
+                                                                                                                else
+                                                                                                                  {
+                                                                                                                    _showErrorDialog(
+                                                                                                                        context, value["body"])
+                                                                                                                  }
+                                                                                                              }),
+                                                                                                    }
+                                                                                                  else
+                                                                                                    {_showErrorDialog(context, value["body"])}
+                                                                                                }),
                                                                                       }
                                                                                     else
                                                                                       {_showErrorDialog(context, value["body"])}

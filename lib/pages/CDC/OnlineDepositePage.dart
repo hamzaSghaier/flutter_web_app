@@ -398,12 +398,14 @@ class _OnlineDepositePageState extends State<OnlineDepositePage> {
                                             setState(() {
                                               _isNowLoading = true;
                                             });
+
                                             if (_keyfinance.currentState.getFile() != null)
                                               await BackendService.uploadDocumentWithAlias(
                                                   _keyfinance.currentState.getFile(), "finance", random_alias);
                                             if (_keybalance.currentState.getFile() != null)
-                                              await BackendService.uploadDocumentWithAlias(
-                                                  _keybalance.currentState.getFile(), "balance", random_alias);
+                                              await BackendService.uploadBalance(
+                                                _keybalance.currentState.getFile(),
+                                              );
 
                                             if (_keyclarification.currentState.getFile() != null)
                                               await BackendService.uploadDocumentWithAlias(

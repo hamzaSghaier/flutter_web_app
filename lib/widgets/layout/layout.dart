@@ -38,7 +38,7 @@ class LayoutTemplate extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                NavigationBar(),
+                NavigationBarr(),
                 Expanded(
                   child: Navigator(
                     key: locator<NavigationService>().navigatorKey,

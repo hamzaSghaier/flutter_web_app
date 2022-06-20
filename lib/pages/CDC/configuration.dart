@@ -7,10 +7,10 @@ class Configuration {
   static String host = "192.168.1.105:8888/";
 
   static String associationToken = "e74eb221af1245feaaffb4dd88081637";
-  static String urlEtatFinanciere = "$HOST/cdc/templates/etat_financier";
-  static String urlEclairsissement =  "$HOST/cdc/templates/eclairecissement";
-  static String urlSubvension = "$HOST/cdc/templates/subvontion";
-  static String urlBalance = "$HOST/cdc/templates/balance";
+  static String urlEtatFinanciere = "$HOST2/cdc/templates/etat_financier";
+  static String urlEclairsissement =  "$HOST2/cdc/templates/eclairecissement";
+  static String urlSubvension = "$HOST2/cdc/templates/subvontion";
+  static String urlBalance = "$HOST2/cdc/templates/balance";
   static String jwt = "";
   static Association currentAssociation;
 }
