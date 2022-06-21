@@ -291,7 +291,7 @@ class BackendService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var now = DateTime.now();
       var headers = {'enctype': 'multipart/form-data', 'Authorization': prefs.getString('jwt')};
-      var url = HOST + '/balance/upload/' + prefs.getString('object') + '${now.year}';
+      var url = HOST2 + '/balance/upload/' + prefs.getString('object') + '/${now.year}';
       // var request = http.MultipartRequest('POST', Uri.parse(url));
       // request.files.add(await http.MultipartFile.fromBytes('file', selectedFile, contentType: new MediaType('application', 'octet-stream'), filename: name));
 
